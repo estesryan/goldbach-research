@@ -1,0 +1,63 @@
+First-kill certificate for Theorem thm:two-sided-0548 (eq. sp:eq:certified-margin)
+started 2026-11-01T14:46:50Z
+environment {'python': '3.12.10', 'python-flint': '0.9.0', 'FLINT': '3.6.0', 'numpy': '2.1.3', 'platform': 'Windows-11-10.0.26200-SP0'}
+manuscript sha256 8ca6fde20856f0b86e74303951eeb5e4d3d0a90a6b1bedaa8ffc65b95b4ab9b8
+source sieve_functions.py sha256 49db128b58f529499d46736b17eddde5f5c17e1bf3acbc510592e18d5be3c558
+source certify_first_kill.py sha256 474c3df4f3f937cc927a2708ca3f7c8f433808ce1a61ca1c5a44b34f8bafceeb
+Arb precision 192 bits, Taylor degree 110, Cauchy radius 5/4, evaluation radius 1/2
+parameters a=2/25 b=137/500 eps=1/10000 L=4999/10000 L/a=4999/800 2b=137/250
+hypotheses of Theorem sp:thm:criterion: {'0<eps<1/6': True, '0<a<b<1/3': True, 'a<=(1/2-eps)/2': True, 'a<1/4': True, 'X^b=q^0.548': True, 'L/a=6.24875': True}
+Taylor models: omega pieces 1..12, F pieces 1..6, f pieces 2..6 (0.0s)
+  omega max truncation tail 7.19e-44
+  F max truncation tail 1.60e-43
+  f max truncation tail 9.47e-44
+  closed form omega(5/2) piece 2: [0.5621860432432657527912052 +/- 4.62e-26]  OK
+  closed form omega(3) piece 2: [0.5643823935199817698057440 +/- 4.05e-26]  OK
+  closed form omega(3) piece 3: [0.5643823935199817698057440 +/- 4.05e-26]  OK
+  closed form omega(7/2) piece 3: [0.5608288644515888217081410 +/- 3.78e-26]  OK
+  closed form omega(4) piece 3: [0.5614582414068377374244184 +/- 2.18e-26]  OK
+  closed form omega(4) piece 4: [0.5614582414068377374244184 +/- 2.18e-26]  OK
+  closed form f(5/2) piece 2: [0.5777301764070922931002374 +/- 4.19e-27]  OK
+  closed form f(3) piece 2: [0.8230302166019934315295891 +/- 3.09e-27]  OK
+  closed form f(3) piece 3: [0.8230302166019934315295891 +/- 3.09e-27]  OK
+  closed form f(7/2) piece 3: [0.9325600853720625933553643 +/- 1.63e-26]  OK
+  closed form f(4) piece 3: [0.9783540227059277568348402 +/- 3.04e-28]  OK
+  closed form f(4) piece 4: [0.9783540227059277568348402 +/- 3.04e-28]  OK
+  closed form F(3) piece 2: [1.187381611993465323491003 +/- 2.65e-25]  OK
+  closed form F(3) piece 3: [1.187381611993465323491003 +/- 2.65e-25]  OK
+  closed form F(7/2) piece 3: [1.065193558002913994269317 +/- 4.82e-25]  OK
+  closed form F(4) piece 3: [1.021641552540073820678763 +/- 1.33e-25]  OK
+  closed form F(4) piece 4: [1.021641552540073820678763 +/- 1.33e-25]  OK
+  closed form F(9/2) piece 4: [1.006477127645245870545539 +/- 4.66e-25]  OK
+  closed form F(5) piece 4: [1.001740410233906606991475 +/- 4.61e-25]  OK
+  closed form F(5) piece 5: [1.001740410233906606991475 +/- 4.61e-25]  OK
+f(L/a)      = [0.999949692499728694435632939647 +/- 3.58e-31]
+omega(1/a)  = [0.561459483566885170881463964693 +/- 2.70e-31]
+integral over beta = 1/alpha:
+  beta in [3.649635036, 4.000000000]  omega piece  2  F piece 1  value [1.4140964008461984930 +/- 4.16e-20]  remainder <= 4.77e-43
+  beta in [4.000000000, 4.000800160]  omega piece  3  F piece 1  value [0.0032178970796816932059 +/- 1.27e-23]  remainder <= 1.02e-45
+  beta in [4.000800160, 5.000000000]  omega piece  3  F piece 2  value [3.9974389801337706570 +/- 9.13e-21]  remainder <= 5.97e-43
+  beta in [5.000000000, 6.000000000]  omega piece  4  F piece 2  value [4.0009874516145099605 +/- 2.93e-20]  remainder <= 5.14e-43
+  beta in [6.000000000, 6.001200240]  omega piece  5  F piece 2  value [0.0048018776866433532827 +/- 2.39e-24]  remainder <= 4.49e-46
+  beta in [6.001200240, 7.000000000]  omega piece  5  F piece 3  value [4.0623799677414365802 +/- 3.65e-20]  remainder <= 5.25e-43
+  beta in [7.000000000, 8.000000000]  omega piece  6  F piece 3  value [4.3765864660626187133 +/- 4.59e-20]  remainder <= 5.23e-43
+  beta in [8.000000000, 8.001600320]  omega piece  7  F piece 3  value [0.0073445584004233086849 +/- 1.14e-23]  remainder <= 8.31e-46
+  beta in [8.001600320, 9.000000000]  omega piece  7  F piece 4  value [4.8250762188326538081 +/- 9.78e-21]  remainder <= 2.62e-43
+  beta in [9.000000000, 10.000000000]  omega piece  8  F piece 4  value [5.3530429752834003840 +/- 4.91e-20]  remainder <= 2.77e-43
+  beta in [10.000000000, 10.002000400]  omega piece  9  F piece 4  value [0.011252134879153897344 +/- 3.16e-22]  remainder <= 5.67e-46
+  beta in [10.002000400, 11.000000000]  omega piece  9  F piece 5  value [5.8896440653765676985 +/- 1.68e-20]  remainder <= 3.24e-43
+  beta in [11.000000000, 12.000000000]  omega piece 10  F piece 5  value [6.4583025252585659692 +/- 3.39e-20]  remainder <= 3.50e-43
+  beta in [12.000000000, 12.002400480]  omega piece 11  F piece 5  value [0.016176597435615052409 +/- 2.50e-22]  remainder <= 8.69e-46
+  beta in [12.002400480, 12.500000000]  omega piece 11  F piece 6  value [3.4230197265512465610 +/- 3.77e-20]  remainder <= 1.25e-43
+segments    = 15
+integral    = [43.8433678431824861296852991211 +/- 3.54e-29]
+E(a,b,eps)  = [0.999529128669321240324055360306 +/- 2.51e-31]
+margin      = [0.000420563830407454111577579340893 +/- 7.22e-35]
+required 0.99994969 < f(L/a) < 0.99994970: PASS
+required 0.99952912 < E(a,b,eps) < 0.99952914: PASS
+required f(L/a)-E(a,b,eps) > 0.00042055: PASS
+double-precision cross-check (independent solver, non-rigorous): {'f(L/a)': 0.9999496926080865, 'omega(1/a)': 0.5614594836035061, 'E(a,b,eps)': 0.9995291286916127, 'margin': 0.0004205639164738262}
+  max deviation from enclosure midpoints 1.08e-10: OK
+certificate written: certificates/first_kill_0548.json
+STATUS PASS
+elapsed 0.1s

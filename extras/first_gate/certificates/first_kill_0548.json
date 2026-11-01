@@ -1,0 +1,432 @@
+{
+  "certificate": "first_kill_0548",
+  "manuscript_claims": [
+    "Theorem thm:two-sided-0548",
+    "Theorem sp:thm:criterion",
+    "eq. sp:eq:certified-margin (Appendix A, Section sp:sec:numerics)"
+  ],
+  "manuscript": {
+    "file": "first_gate_prime_square_blocks.tex",
+    "sha256": "8ca6fde20856f0b86e74303951eeb5e4d3d0a90a6b1bedaa8ffc65b95b4ab9b8"
+  },
+  "sources": {
+    "sieve_functions.py": "49db128b58f529499d46736b17eddde5f5c17e1bf3acbc510592e18d5be3c558",
+    "certify_first_kill.py": "474c3df4f3f937cc927a2708ca3f7c8f433808ce1a61ca1c5a44b34f8bafceeb"
+  },
+  "environment": {
+    "python": "3.12.10",
+    "python-flint": "0.9.0",
+    "FLINT": "3.6.0",
+    "numpy": "2.1.3",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "parameters": {
+    "a": "2/25",
+    "b": "137/500",
+    "eps": "1/10000",
+    "L": "4999/10000",
+    "L/a": "4999/800"
+  },
+  "hypotheses": {
+    "0<eps<1/6": true,
+    "0<a<b<1/3": true,
+    "a<=(1/2-eps)/2": true,
+    "a<1/4": true,
+    "X^b=q^0.548": true,
+    "L/a=6.24875": true
+  },
+  "method": {
+    "arithmetic": "Arb ball arithmetic (python-flint)",
+    "precision_bits": 192,
+    "taylor_degree": 110,
+    "taylor_centres": "k+1/2 on each [k,k+1]",
+    "cauchy_radius": "5/4",
+    "evaluation_radius": "1/2",
+    "integration": "exact polynomial integration in beta=1/alpha with explicit remainder bounds",
+    "segments": 15
+  },
+  "segments": [
+    {
+      "beta": [
+        "500/137",
+        "4"
+      ],
+      "omega_piece": 2,
+      "F_piece": 1,
+      "remainder_bound": 4.771096258606471e-43,
+      "value": "[1.4140964008461984930 +/- 4.16e-20]"
+    },
+    {
+      "beta": [
+        "4",
+        "20000/4999"
+      ],
+      "omega_piece": 3,
+      "F_piece": 1,
+      "remainder_bound": 1.023321463315923e-45,
+      "value": "[0.0032178970796816932059 +/- 1.27e-23]"
+    },
+    {
+      "beta": [
+        "20000/4999",
+        "5"
+      ],
+      "omega_piece": 3,
+      "F_piece": 2,
+      "remainder_bound": 5.9684707172747826e-43,
+      "value": "[3.9974389801337706570 +/- 9.13e-21]"
+    },
+    {
+      "beta": [
+        "5",
+        "6"
+      ],
+      "omega_piece": 4,
+      "F_piece": 2,
+      "remainder_bound": 5.144710839300054e-43,
+      "value": "[4.0009874516145099605 +/- 2.93e-20]"
+    },
+    {
+      "beta": [
+        "6",
+        "30000/4999"
+      ],
+      "omega_piece": 5,
+      "F_piece": 2,
+      "remainder_bound": 4.487067190654058e-46,
+      "value": "[0.0048018776866433532827 +/- 2.39e-24]"
+    },
+    {
+      "beta": [
+        "30000/4999",
+        "7"
+      ],
+      "omega_piece": 5,
+      "F_piece": 3,
+      "remainder_bound": 5.251111396573543e-43,
+      "value": "[4.0623799677414365802 +/- 3.65e-20]"
+    },
+    {
+      "beta": [
+        "7",
+        "8"
+      ],
+      "omega_piece": 6,
+      "F_piece": 3,
+      "remainder_bound": 5.229933507082279e-43,
+      "value": "[4.3765864660626187133 +/- 4.59e-20]"
+    },
+    {
+      "beta": [
+        "8",
+        "40000/4999"
+      ],
+      "omega_piece": 7,
+      "F_piece": 3,
+      "remainder_bound": 8.305236183520088e-46,
+      "value": "[0.0073445584004233086849 +/- 1.14e-23]"
+    },
+    {
+      "beta": [
+        "40000/4999",
+        "9"
+      ],
+      "omega_piece": 7,
+      "F_piece": 4,
+      "remainder_bound": 2.6171527223997545e-43,
+      "value": "[4.8250762188326538081 +/- 9.78e-21]"
+    },
+    {
+      "beta": [
+        "9",
+        "10"
+      ],
+      "omega_piece": 8,
+      "F_piece": 4,
+      "remainder_bound": 2.7651869188553916e-43,
+      "value": "[5.3530429752834003840 +/- 4.91e-20]"
+    },
+    {
+      "beta": [
+        "10",
+        "50000/4999"
+      ],
+      "omega_piece": 9,
+      "F_piece": 4,
+      "remainder_bound": 5.665441743670025e-46,
+      "value": "[0.011252134879153897344 +/- 3.16e-22]"
+    },
+    {
+      "beta": [
+        "50000/4999",
+        "11"
+      ],
+      "omega_piece": 9,
+      "F_piece": 5,
+      "remainder_bound": 3.2378594485071118e-43,
+      "value": "[5.8896440653765676985 +/- 1.68e-20]"
+    },
+    {
+      "beta": [
+        "11",
+        "12"
+      ],
+      "omega_piece": 10,
+      "F_piece": 5,
+      "remainder_bound": 3.503376357550015e-43,
+      "value": "[6.4583025252585659692 +/- 3.39e-20]"
+    },
+    {
+      "beta": [
+        "12",
+        "60000/4999"
+      ],
+      "omega_piece": 11,
+      "F_piece": 5,
+      "remainder_bound": 8.693062029375937e-46,
+      "value": "[0.016176597435615052409 +/- 2.50e-22]"
+    },
+    {
+      "beta": [
+        "60000/4999",
+        "25/2"
+      ],
+      "omega_piece": 11,
+      "F_piece": 6,
+      "remainder_bound": 1.2517504429045136e-43,
+      "value": "[3.4230197265512465610 +/- 3.77e-20]"
+    }
+  ],
+  "enclosures": {
+    "f(L/a)": {
+      "lower": "6276785950089424785764354216867484500563662104661102374727*2^-192",
+      "upper": "6276785950089424785764354216867484500563666211761835421511*2^-192",
+      "lower_decimal_outward": "0.999949692499728694435632939646",
+      "upper_decimal_outward": "0.999949692499728694435632939647",
+      "radius": 3.2714944780114984e-43
+    },
+    "omega(1/a)": {
+      "lower": "1762169149323502238327149974725387055394184368045802842561*2^-191",
+      "upper": "1762169149323502238327149974725387055394189522163022358977*2^-191",
+      "lower_decimal_outward": "0.561459483566885170881463964693",
+      "upper_decimal_outward": "0.561459483566885170881463964694",
+      "radius": 8.210982451440088e-43
+    },
+    "integral": {
+      "lower": "4300145005838084040203067458169177334587868643702583888715*2^-186",
+      "upper": "4300145005838084040203067458169177334587883697879978642251*2^-186",
+      "lower_decimal_outward": "43.843367843182486129685299121064",
+      "upper_decimal_outward": "43.843367843182486129685299121065",
+      "radius": 7.674460235627159e-41
+    },
+    "E(a,b,eps)": {
+      "lower": "6274146028139733285860454050241674788212550629914281429513*2^-192",
+      "upper": "6274146028139733285860454050241674788212590946127305689609*2^-192",
+      "lower_decimal_outward": "0.999529128669321240324055360305",
+      "upper_decimal_outward": "0.999529128669321240324055360306",
+      "radius": 3.211371642822079e-42
+    },
+    "f(L/a)-E(a,b,eps)": {
+      "lower": "1319960974845749951950083312904856175535579266882613919*2^-191",
+      "upper": "1319960974845749951950083312904856175557790923792724639*2^-191",
+      "lower_decimal_outward": "0.000420563830407454111577579340",
+      "upper_decimal_outward": "0.000420563830407454111577579341",
+      "radius": 3.5385210956346627e-42
+    }
+  },
+  "required_bounds": [
+    {
+      "statement": "0.99994969 < f(L/a) < 0.99994970",
+      "pass": true
+    },
+    {
+      "statement": "0.99952912 < E(a,b,eps) < 0.99952914",
+      "pass": true
+    },
+    {
+      "statement": "f(L/a)-E(a,b,eps) > 0.00042055",
+      "pass": true
+    }
+  ],
+  "validation": {
+    "closed_form_tests": [
+      {
+        "function": "omega",
+        "piece": 2,
+        "argument": "5/2",
+        "pass": true,
+        "model": "[0.5621860432432657527912052 +/- 4.62e-26]",
+        "closed_form": "[0.5621860432432657527912052 +/- 4.62e-26]"
+      },
+      {
+        "function": "omega",
+        "piece": 2,
+        "argument": "3",
+        "pass": true,
+        "model": "[0.5643823935199817698057440 +/- 4.05e-26]",
+        "closed_form": "[0.5643823935199817698057440 +/- 4.05e-26]"
+      },
+      {
+        "function": "omega",
+        "piece": 3,
+        "argument": "3",
+        "pass": true,
+        "model": "[0.5643823935199817698057440 +/- 4.05e-26]",
+        "closed_form": "[0.5643823935199817698057440 +/- 4.05e-26]"
+      },
+      {
+        "function": "omega",
+        "piece": 3,
+        "argument": "7/2",
+        "pass": true,
+        "model": "[0.5608288644515888217081410 +/- 3.78e-26]",
+        "closed_form": "[0.5608288644515888217081410 +/- 3.78e-26]"
+      },
+      {
+        "function": "omega",
+        "piece": 3,
+        "argument": "4",
+        "pass": true,
+        "model": "[0.5614582414068377374244184 +/- 2.18e-26]",
+        "closed_form": "[0.5614582414068377374244184 +/- 2.18e-26]"
+      },
+      {
+        "function": "omega",
+        "piece": 4,
+        "argument": "4",
+        "pass": true,
+        "model": "[0.5614582414068377374244184 +/- 2.18e-26]",
+        "closed_form": "[0.5614582414068377374244184 +/- 2.18e-26]"
+      },
+      {
+        "function": "f",
+        "piece": 2,
+        "argument": "5/2",
+        "pass": true,
+        "model": "[0.5777301764070922931002374 +/- 4.19e-27]",
+        "closed_form": "[0.5777301764070922931002374 +/- 4.19e-27]"
+      },
+      {
+        "function": "f",
+        "piece": 2,
+        "argument": "3",
+        "pass": true,
+        "model": "[0.8230302166019934315295891 +/- 3.09e-27]",
+        "closed_form": "[0.8230302166019934315295891 +/- 3.09e-27]"
+      },
+      {
+        "function": "f",
+        "piece": 3,
+        "argument": "3",
+        "pass": true,
+        "model": "[0.8230302166019934315295891 +/- 3.09e-27]",
+        "closed_form": "[0.8230302166019934315295891 +/- 3.09e-27]"
+      },
+      {
+        "function": "f",
+        "piece": 3,
+        "argument": "7/2",
+        "pass": true,
+        "model": "[0.9325600853720625933553643 +/- 1.63e-26]",
+        "closed_form": "[0.9325600853720625933553643 +/- 1.63e-26]"
+      },
+      {
+        "function": "f",
+        "piece": 3,
+        "argument": "4",
+        "pass": true,
+        "model": "[0.9783540227059277568348402 +/- 3.04e-28]",
+        "closed_form": "[0.9783540227059277568348402 +/- 3.04e-28]"
+      },
+      {
+        "function": "f",
+        "piece": 4,
+        "argument": "4",
+        "pass": true,
+        "model": "[0.9783540227059277568348402 +/- 3.04e-28]",
+        "closed_form": "[0.9783540227059277568348402 +/- 3.04e-28]"
+      },
+      {
+        "function": "F",
+        "piece": 2,
+        "argument": "3",
+        "pass": true,
+        "model": "[1.187381611993465323491003 +/- 2.65e-25]",
+        "closed_form": "[1.187381611993465323491003 +/- 2.65e-25]"
+      },
+      {
+        "function": "F",
+        "piece": 3,
+        "argument": "3",
+        "pass": true,
+        "model": "[1.187381611993465323491003 +/- 2.65e-25]",
+        "closed_form": "[1.187381611993465323491003 +/- 2.65e-25]"
+      },
+      {
+        "function": "F",
+        "piece": 3,
+        "argument": "7/2",
+        "pass": true,
+        "model": "[1.065193558002913994269317 +/- 4.82e-25]",
+        "closed_form": "[1.065193558002913994269317 +/- 4.82e-25]"
+      },
+      {
+        "function": "F",
+        "piece": 3,
+        "argument": "4",
+        "pass": true,
+        "model": "[1.021641552540073820678763 +/- 1.33e-25]",
+        "closed_form": "[1.021641552540073820678763 +/- 1.33e-25]"
+      },
+      {
+        "function": "F",
+        "piece": 4,
+        "argument": "4",
+        "pass": true,
+        "model": "[1.021641552540073820678763 +/- 1.33e-25]",
+        "closed_form": "[1.021641552540073820678763 +/- 1.33e-25]"
+      },
+      {
+        "function": "F",
+        "piece": 4,
+        "argument": "9/2",
+        "pass": true,
+        "model": "[1.006477127645245870545539 +/- 4.66e-25]",
+        "closed_form": "[1.006477127645245870545539 +/- 4.66e-25]"
+      },
+      {
+        "function": "F",
+        "piece": 4,
+        "argument": "5",
+        "pass": true,
+        "model": "[1.001740410233906606991475 +/- 4.61e-25]",
+        "closed_form": "[1.001740410233906606991475 +/- 4.61e-25]"
+      },
+      {
+        "function": "F",
+        "piece": 5,
+        "argument": "5",
+        "pass": true,
+        "model": "[1.001740410233906606991475 +/- 4.61e-25]",
+        "closed_form": "[1.001740410233906606991475 +/- 4.61e-25]"
+      }
+    ],
+    "double_precision_cross_check": {
+      "values": {
+        "f(L/a)": 0.9999496926080865,
+        "omega(1/a)": 0.5614594836035061,
+        "E(a,b,eps)": 0.9995291286916127,
+        "margin": 0.0004205639164738262
+      },
+      "abs_deviation": {
+        "f(L/a)": 1.0835787822571774e-10,
+        "omega(1/a)": 3.6620928511865714e-11,
+        "E(a,b,eps)": 2.2291501977633743e-11,
+        "margin": 8.606637207390563e-11
+      },
+      "pass": true
+    }
+  },
+  "scope": "Numerical inequality only; the analytic reduction in Appendix A is not certified here.",
+  "status": "PASS"
+}

@@ -1,0 +1,2193 @@
+\documentclass[final,11pt]{elsarticle}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{placeins}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{computation}[theorem]{Computation}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\Sg}{\mathfrak{S}}
+\newcommand{\GG}{\mathfrak{G}}
+\newcommand{\Pm}{P^{-}}
+\newcommand{\one}{\mathbf1}
+\newcommand{\R}{\mathcal R}
+\newcommand{\E}{\mathcal E}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\band}{\mathcal{I}_N}
+\newcommand{\cband}{\mathcal{J}_N}
+
+
+\numberwithin{equation}{section}
+
+
+
+\begin{document}
+\emergencystretch=3em
+\begin{frontmatter}
+\title{Goldbach Representations in Consecutive Prime-Square Blocks:\\
+A Multidimensional Factorization and Sieve Analysis}
+\author[inst1]{Ryan S.~Estes}
+\affiliation[inst1]{organization={Independent Researcher},country={Ireland}}
+\begin{abstract}
+Let $q<r$ be consecutive odd primes and $q^2<N<r^2$ be even. The First-Gate problem asks whether $N$ has a representation as a sum of two primes in $[q,q^2)$. We study this restriction through the central-band factorizations
+$N=p+b$, $N=p+uv$, $N=p+uvw$ and $N=p+uvwt$, where the displayed factors are prime. At the shallow cut $N^{1/5}$ the complement of the anchor prime has at most four prime factors. A linear-sieve argument gives a lower bound with coefficient $\frac23\log(3/2)$ in Goldbach singular-series units. At the cut $(2N/3)^{1/3}$ only prime and semiprime complements survive; a prime-product switching argument bounds the semiprime contribution above with coefficient $\frac23\log2$. Exact factor-counting and Liouville identities identify the parity term separating these estimates from prime-pair positivity. A two-sided first-kill sieve provides a further computer-assisted bound for squarefree paired rough numbers at depth $q^{0.548}$, with its analytic proof in an appendix. Applications of published Goldbach and short-interval prime estimates yield global density-one, blockwise almost-all and local-window results for First-Gate. Explicit conditional criteria isolate additional pointwise distribution or parity cancellation sufficient for the conjecture. None of the bounds establishes First-Gate or binary Goldbach for every target.
+\end{abstract}
+\begin{keyword}
+Goldbach problem \sep prime-square blocks \sep almost-primes \sep linear sieve \sep switched sums \sep parity problem
+\end{keyword}
+\end{frontmatter}
+
+\section{Introduction}\label{sec:introduction}
+Let $q<r$ be consecutive odd primes with $q\ge11$. The problem considered here is the following restricted form of binary Goldbach.
+\begin{conjecture}[First-Gate]\label{conj:fg}
+Every even integer $q^2<N<r^2$ is a sum of two primes in $[q,q^2)$.
+\end{conjecture}
+Since the open intervals between consecutive odd prime squares partition the even integers $N\ge122$, First-Gate implies binary Goldbach in that range. Conversely, an unrestricted Goldbach representation need not have both summands below $q^2$.
+
+Fix a prime anchor $p$ in the central interval
+\begin{equation}\label{eq:intro-bands}
+ \mathcal I_N=[\lceil N/3\rceil,\lfloor N/2\rfloor],\qquad
+ n=N-p\in\mathcal J_N=[\lceil N/2\rceil,\lfloor 2N/3\rfloor].
+\end{equation}
+\begin{samepage}
+The factorization of $n$ organizes representations by the number of prime variables, including $p$, rather than the number of independent variables after imposing their sum:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.19}
+\begin{tabular}{@{}c l l p{0.39\linewidth}@{}}
+\toprule
+Dimension & Representation & $\Omega(n)$ & Role in the sieve analysis\\
+\midrule
+2D & $N=p+b$ & $1$ & Prime-pair target; survives both cuts; odd parity\\
+3D & $N=p+uv$ & $2$ & Deep-cut semiprimes; switching bound; even parity\\
+4D & $N=p+uvw$ & $3$ & Shallow triple products; excluded deep; odd parity\\
+5D & $N=p+uvwt$ & $4$ & Shallow four-prime products; excluded deep; even parity\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{samepage}
+All displayed factors are prime. The $t$ in $uvwt$ is a prime factor, whereas later $t=N-q^2$ denotes a block offset. To count each integer rather than its ordered factorizations, the factors of $n$ are taken in nondecreasing order, with repetitions allowed. For $j\ge1$ define
+\[
+ \mathcal R_j(N;w)=\#\{p\in\mathbb P\cap\mathcal I_N:
+ P^-(N-p)\ge w,\ \Omega(N-p)=j\}.
+\]
+For $w=N^{1/5}$ the strict bound $n<N$ implies $\Omega(n)\le4$, so that
+\begin{equation}\label{eq:dimensional-decomp}
+ T_{N^{1/5}}(N)=\mathcal R_1(N;N^{1/5})+\mathcal R_2(N;N^{1/5})
+ +\mathcal R_3(N;N^{1/5})+\mathcal R_4(N;N^{1/5}).
+\end{equation}
+The sum is exact, including prime powers. The factor cutoff $z=(2N/3)^{1/3}$ excludes $\Omega(n)\ge3$. Hence
+\begin{equation}\label{eq:deep-dimensional-decomp}
+ T_z(N)=\mathcal R_1(N;z)+\mathcal R_2(N;z),\qquad
+ P_c(N)=\mathcal R_1(N;z).
+\end{equation}
+For sufficiently large blocks, central-band prime pairs lie in $[q,q^2)$ by Proposition~\ref{prop:reduction}.
+
+The shallow linear sieve makes $T_{N^{1/5}}(N)$ positive but counts all four strata and does not distinguish the parity of $\Omega(n)$. At the deep cut the 4D and 5D strata vanish; the remaining task is to separate prime complements from semiprimes. Switching treats the 3D population through the prime condition on $N-uv$, permitting an upper-bound sieve. The exact Liouville identity expresses the 2D contribution as half the difference between the deep rough count and its parity-weighted sum. Thus neither shallow rough-complement positivity nor an upper bound for semiprimes alone establishes pointwise 2D positivity. The shallow odd-$\Omega$ terms also enter the conditional parity analysis.
+
+With $\mathfrak S(N)$ the Goldbach singular series, the principal factorization bounds are
+\begin{align*}
+T_{N^{1/5}}(N)&\ge\left(\frac23\log\frac32-o(1)\right)
+ \frac{\mathfrak S(N)N}{(\log N)^2},\\
+M_z(N)&\le\left(\frac23\log2+o(1)\right)
+ \frac{\mathfrak S(N)N}{(\log N)^2},
+\end{align*}
+from Theorem~\ref{thm:shallow} and Proposition~\ref{prop:switched-cap}. These bounds quantify the sieve and switching contributions but do not yield $P_c(N)>0$ for every $N$.
+
+There are, however, unconditional almost-all conclusions for First-Gate, obtained by applying published Goldbach and short-interval prime theorems. Theorem~\ref{thm:almost-all-FG} gives, for each fixed $A>0$, at most $O_A(Y/(\log Y)^A)$ failed even targets up to $Y$. Within any interval $(U,U+L]$ contained in a sufficiently large prime-square block, Theorem~\ref{thm:local-no-long-runs} gives a positive proportion of successful even targets when $L\ge X^{2/15+\varepsilon}$, where $X=q^2$. Theorem~\ref{thm:PP-FG-local} gives at most $O_{\varepsilon,A}(L/(\log X)^A)$ failures in such an interval when $L\ge X^{1/3+\varepsilon}$. These deductions use the stated external distribution theorems and do not resolve the pointwise First-Gate conjecture.
+
+A separate two-sided first-kill sieve (Theorem~\ref{thm:two-sided-0548}) yields $\gg q^2/(\log q)^2$ pairs of squarefree $q^{0.548}$-rough integers, using a computer-assisted numerical inequality. Roughness at this depth does not imply primality, so this theorem does not provide the missing 2D positivity. The remaining sections develop the geometric reductions, exact factor-counting and switching identities, and conditional parity criteria; an appendix contains the technical two-sided argument.
+
+\section{Notation and analytic inputs}\label{sec:prelim}
+%======================================================================
+
+\subsection{Notation}
+\begin{itemize}
+\item $N$ is even, and $q<r$ are the consecutive odd primes with $q^2<N<r^2$.
+\item The anchor band is $\band=[\lceil N/3\rceil,\lfloor N/2\rfloor]$, and the complement band is $\cband=[\lceil N/2\rceil,\lfloor 2N/3\rfloor]$. Then $p\in\band$ if and only if $n=N-p\in\cband$.
+\item $x=2N/3$ and $z=x^{1/3}$. We use $y=N^{1/5}$, and more generally $w=N^{a}$.
+\item A number $n$ is \emph{$w$-rough} if $\Pm(n)\ge w$. Since $\Pm$ is integer-valued, this is the same as $\Pm(n)\ge\lceil w\rceil$, and every cutoff is implemented by exact integer comparison. For instance $\Pm(n)\ge z\Leftrightarrow 3\Pm(n)^3\ge 2N$.
+\item For $w\le z$ define
+\begin{align*}
+T_w(N)&=\#\{p\in\PP\cap\band:\Pm(N-p)\ge w\},\\
+M_z(N)&=\#\{p\in\PP\cap\band:\Pm(N-p)\ge z,\ N-p\notin\PP\},\\
+C_\lambda(N)&=\sum_{p\in\PP\cap\band,\ \Pm(N-p)\ge z}\lambda(N-p),
+\end{align*}
+with $\lambda$ the Liouville function.
+\item $\Sg(N)=2C_2\prod_{\ell\mid N,\ \ell>2}\frac{\ell-1}{\ell-2}$ with $C_2=\prod_{\ell>2}(1-(\ell-1)^{-2})$. The \emph{central main term} is
+\[
+\GG(N)=\frac{\Sg(N)\,N}{6(\log N)^2}.
+\]
+Constants are quoted either in \emph{$\Sg$-units} $\Sg(N)N/(\log N)^2$ or in \emph{$\GG$-units}; one $\GG$-unit is $1/6$ of an $\Sg$-unit.
+\end{itemize}
+
+\subsection{Cited theorems}
+We record the external inputs used below; qualifications concerning their exact hypotheses are stated where relevant.
+
+\begin{theorem}[Bombieri--Vinogradov~\cite{Bombieri65,Vinogradov65}]\label{thm:bv}
+For every $A>0$ there is $B=B(A)$ such that
+\[
+\sum_{d\le X^{1/2}(\log X)^{-B}}\ \max_{Y\le X}\ \max_{(a,d)=1}\Bigl|\pi(Y;d,a)-\frac{\pi(Y)}{\varphi(d)}\Bigr|\ll_A \frac{X}{(\log X)^{A}}.
+\]
+The implied constant is ineffective, through Siegel's theorem.
+\end{theorem}
+
+
+\begin{theorem}[linear sieve; Jurkat--Richert~\cite{JurkatRichert}, Iwaniec~\cite{Iwaniec80}, see~\cite{HR},~\cite{FI}]\label{thm:linear-sieve}
+Let $\mathcal A$ be a finite sequence of integers and $X>0$. Let $g$ be multiplicative, with $0\le g(\ell)<1$ on primes, and suppose that for all $2\le w<z$
+\[
+\prod_{w\le\ell<z}(1-g(\ell))^{-1}\le\frac{\log z}{\log w}\Bigl(1+\frac{K}{\log w}\Bigr).
+\]
+Put $r_d=|\mathcal A_d|-g(d)X$, $V(z)=\prod_{\ell<z}(1-g(\ell))$, $D\ge z$ and $s=\log D/\log z$. Then
+\[
+XV(z)\bigl(f(s)+o(1)\bigr)-R\ \le\ S(\mathcal A,z)\ \le\ XV(z)\bigl(F(s)+o(1)\bigr)+R,\qquad R=\sum_{d<D,\ d\mid P(z)}|r_d|,
+\]
+where $o(1)\to0$ as $D\to\infty$, uniformly for $s$ in compact subsets of $(0,\infty)$. The functions $F,f$ are the continuous solutions of
+\[
+\begin{aligned} F(s)&=\frac{2e^\gamma}{s}\ (0<s\le3), & f(s)&=0\ (0<s\le2),\\ (sF(s))'&=f(s-1)\ (s>3), &(sf(s))'&=F(s-1)\ (s>2). \end{aligned}
+\]
+In particular $f(s)=2e^\gamma\log(s-1)/s$ on $[2,4]$. Moreover $F$ is decreasing, $f$ is increasing, and $0\le f\le1\le F$.
+
+The lower bound is realized by explicit weights (Rosser--Iwaniec $\beta$-sieve with $\beta=2$; see~\cite[Ch.~11--12]{FI}). There are $\lambda^-_d\in\{-1,0,1\}$, supported on $d<D$ with $d\mid P(z)$, such that
+\[
+\sum_{d\mid n}\lambda^-_d\le 1_{(n,P(z))=1}\quad\text{for every }n,
+\qquad
+\sum_{a\in\mathcal A}\sum_{d\mid a}\lambda^-_d\ \ge\ XV(z)\bigl(f(s)+o(1)\bigr)-R .
+\]
+\end{theorem}
+
+\begin{theorem}[sharpness of the linear sieve; Selberg~\cite{SelbergLectures}, see~\cite{FI}]\label{thm:sharp}
+The constants $f(s)$ and $F(s)$ in Theorem~\ref{thm:linear-sieve} cannot be improved. For every $s$ there are sequences satisfying the hypotheses with remainders $R=o(XV(z))$ such that $S(\mathcal A,z)=XV(z)(f(s)+o(1))$, and likewise for $F$. The extremal examples are of Selberg's type, supported on integers of a fixed parity of $\Omega$.
+\end{theorem}
+
+\begin{theorem}[Buchstab~\cite{Buchstab}, de Bruijn]\label{thm:buchstab}
+Buchstab's function $\omega$ satisfies $\omega(u)=1/u$ on $[1,2]$, $(u\omega(u))'=\omega(u-1)$ for $u>2$, $\omega(u)=(1+\log(u-1))/u$ on $[2,3]$, and $\tfrac12\le\omega(u)\le1$ for $u\ge1$.
+\end{theorem}
+
+\subsection{The local density of the reflected sequence}
+
+\begin{lemma}\label{lem:density}
+Let $\mathcal A=\{N-p:\ p\in\PP\cap\band\}$, $X=\pi(\band):=\#(\PP\cap\band)$, and $g(\ell)=1/(\ell-1)$ for odd primes $\ell\nmid N$, $g(\ell)=0$ otherwise. For squarefree $d$ composed of primes $\ell<N/3$,
+\begin{itemize}
+\item if $(d,2N)=1$, then $|\mathcal A_d|=\pi(\band;d,N)$;
+\item otherwise $|\mathcal A_d|=0=g(d)X$.
+\end{itemize}
+Furthermore, as $w\to\infty$,
+\[
+V(w):=\prod_{\ell<w}(1-g(\ell))=\Sg(N)\frac{e^{-\gamma}}{\log w}(1+o(1)),
+\]
+uniformly in $N$. Finally $X=\frac{N}{6\log N}(1+O(1/\log N))$.
+\end{lemma}
+
+\begin{proof}
+If $\ell\mid 2N$ and $\ell\mid N-p$, then $\ell\mid p$. This is impossible for $p>N/3>\ell$, so $|\mathcal A_\ell|=0$; for $\ell=2$, $N-p$ is odd. For the product,
+\[
+V(w)=\prod_{2<\ell<w,\ \ell\nmid N}\frac{\ell-2}{\ell-1}=\prod_{\ell<w}\Bigl(1-\frac1\ell\Bigr)\cdot 2\prod_{2<\ell<w}\frac{\ell(\ell-2)}{(\ell-1)^2}\cdot\prod_{2<\ell<w,\ \ell\mid N}\frac{\ell-1}{\ell-2}.
+\]
+Apply Mertens' theorem. The tail of the convergent product $C_2$ tends to $1$, and the factor over $\ell\mid N$, $\ell\ge w$, is $1+O(\omega(N)/w)=1+o(1)$. The last claim is the prime number theorem with error term. Uniformity in $N$ holds because the only $N$-dependence is through $\prod_{\ell\mid N}$. The dimension condition of Theorem~\ref{thm:linear-sieve} follows from Mertens' theorem with $K$ absolute, since $g(\ell)\le1/(\ell-1)$. \qedhere
+\end{proof}
+
+%======================================================================
+
+\section{Prime-square geometry and exact windows}\label{sec:block1}
+%======================================================================
+
+\begin{proposition}\label{prop:reduction}
+Let $q\ge 11$ and let $N$ be even with $q^2<N<r^2$. Suppose $N=p+n$ with primes $p\in\band$, $n=N-p\in\cband$. If $2N<3q^2$, then $q\le p\le n<q^2$, so $N$ satisfies First-Gate. The condition $2N<3q^2$ holds for every target of the block if and only if $2(r^2-1)<3q^2$. This is the case for all $q\ge 25$, and for $11\le q<25$ it fails exactly for $q\in\{13,23\}$.
+\end{proposition}
+
+\begin{proof}
+Since $p\in\band$ and $n=N-p\in\cband$, we have
+$N/3\le p\le n\le2N/3$. Thus $p>N/3>q^2/3\ge q$,
+and $n<q^2$ if $2N<3q^2$. The largest even target in the
+block is $r^2-1$, giving the stated necessary and sufficient
+blockwise inequality. For $q\ge25$, Nagura's prime-interval theorem~\cite{Nagura} gives
+$r<6q/5$, whence
+$2(r^2-1)<2r^2<(72/25)q^2<3q^2$.
+Direct inspection of $q=11,13,17,19,23$ leaves exactly $13$ and
+$23$ as exceptions.
+\end{proof}
+
+\begin{remark}
+For central-band prime pairs, the lower bound $p\ge q$ is automatic. The possible obstruction to First-Gate is $N-p<q^2$. Conversely, a First-Gate representation need not lie in the central band, so First-Gate does not imply $P_c(N)>0$.
+\end{remark}
+
+\begin{proposition}[Exact full First-Gate interval and square wrap]
+\label{prop:full-FG-window}
+Let $q<r$ be consecutive odd primes, $q\ge 11$, and let $N=q^2+t$ be even with $0<t<r^2-q^2$. Put $X=q^2$ and
+\[
+L_q(N)=\max\{q,t+1\},\qquad U_q(N)=\min\{X-1,\lfloor N/2\rfloor\}.
+\]
+Then the number $F_q(N)$ of unordered First-Gate representations is exactly
+\begin{equation}\label{eq:full-FG-count}
+F_q(N)=\#\{p\in\PP:L_q(N)\le p\le U_q(N),\ N-p\in\PP\}.
+\end{equation}
+In particular, $F_q(N)>0$ is equivalent to First-Gate at $N$. Let
+$\mathcal P_q=\PP\cap[q,X)$. The number of \emph{ordered} First-Gate representations also satisfies
+\begin{equation}\label{eq:FG-wrap}
+2F_q(N)-\mathbf 1_{N/2\in\mathcal P_q}=\sum_{a,b\in\mathcal P_q}\mathbf 1_{a+b\equiv t\pmod X}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+If $p\le N-p$ are primes in $[q,X)$, the lower prime satisfies
+$p\ge q$ and $p>N-X=t$, and $p\le\min(X-1,N/2)$. Conversely,
+these three inequalities imply $q\le p\le N-p<X$, giving
+\eqref{eq:full-FG-count}. Since $q\ge11$, all primes in
+$\mathcal P_q$ are odd. The quantity $t=N-X$ is odd, while
+$a+b$ is even and lies strictly between $0$ and $2X$.
+Thus $a+b\equiv t\pmod X$ forces $a+b=X+t=N$, not $a+b=t$.
+An unordered pair with unequal summands has two orderings;
+the diagonal pair $N/2+N/2$, when $N/2$ is prime in $\mathcal P_q$,
+has one. This gives the correction in \eqref{eq:FG-wrap}.
+\end{proof}
+
+\begin{remark}\label{rem:FG-wrap-scope}
+Identity~\eqref{eq:FG-wrap} changes coordinates but gives no prime-correlation bound; the central band remains the anchor in the factorization and parity sections.
+\end{remark}
+
+\subsection{The forcing boundary and composite-gate rigidity}
+\label{subsec:composite-gates}
+
+The full-band coordinates of Proposition~\ref{prop:full-FG-window}
+can also be written symmetrically.  Let $N=q^2+t=2C$ and put
+$W=q^2-C$.  A pair with smaller endpoint $C-d$ has both
+endpoints below $q^2$ exactly when $0\le d<W$; in the inward
+coordinate $k=W-d$ it becomes
+\[
+(C-d,C+d)=(t+k,q^2-k).
+\]
+If neither endpoint has a prime divisor below $q$, this pair is
+necessarily a First-Gate prime pair: every composite integer below
+$q^2$ has a prime divisor below $q$.  This observation is an exact
+reformulation of the full-band restriction, not a positivity theorem.
+
+\begin{proposition}[Composite-gate rigidity]\label{prop:composite-gates}
+Let $q<r$ be consecutive odd primes with $q\ge11$, and let
+$N=q^2+t=2C$ be even with $q^2<N<r^2$.  Suppose an integer
+$m$, with $2\le m<N$, has no prime divisor below $q$.  If $m$
+is composite, then
+\[
+\boxed{m=q\ell\quad\text{for a prime }\ell\ge q.}
+\]
+In particular, consider offsets $0\le d\le C-2$ for which
+both $C-d$ and $C+d$ have no prime divisor below $q$.
+The lower endpoint $C-d$ is prime; if the upper endpoint is
+composite, then for some even integer $j\ge0$,
+\[
+\boxed{d=W+qj,\qquad
+(C-d,C+d)=(t-qj,\ q(q+j)),}
+\]
+where $q+j$ and $t-qj$ are primes.  Thus every
+composite-upper-endpoint survivor belongs to the single residue
+class $d\equiv W\pmod{2q}$, and their number is at most
+\[
+\left\lceil\frac12\left\lfloor\frac tq\right\rfloor\right\rceil.
+\]
+\end{proposition}
+
+\begin{proof}
+If $m$ is composite and has no prime factor below $q$, then
+all its prime factors are at least $q$.  If $q\nmid m$, they
+are all at least $r$, forcing $m\ge r^2>N$.  Hence $q\mid m$.
+Write $m=qs$, with every prime factor of $s$ at least $q$.
+Were $s$ composite, $m\ge q^3$.  But Bertrand's postulate
+gives $r<2q$, so $r^2<4q^2<q^3$ for $q\ge11$, a contradiction.
+Thus $s=\ell$ is prime.
+
+Since $C=N/2<r^2/2<q^2$ for $q\ge11$ (by Nagura's theorem~\cite{Nagura} for $q\ge29$ and direct inspection for smaller $q$),
+the lower endpoint $C-d<q^2$.  The forcing observation makes
+it prime.  If $C+d$ is composite, the first part gives
+$C+d=q\ell$ for a prime $\ell\ge q$.  Set $j=\ell-q$.
+Because $q,\ell$ are odd, $j$ is even, and
+\[
+d=q(q+j)-C=(q^2-C)+qj=W+qj,
+\qquad C-d=N-q(q+j)=t-qj.
+\]
+The lower endpoint $t-qj$ is prime and has no prime divisor below $q$,
+so $t-qj\ge q$. Thus $qj\le t-q$, and there
+are at most $\lceil\lfloor t/q\rfloor/2\rceil$ nonnegative
+even integers satisfying this inequality, which proves the
+claimed upper bound.
+\end{proof}
+
+\begin{remark}[Scope of the gate bound]
+The proposition counts only surviving offsets with a
+\emph{composite upper endpoint}.  A surviving prime pair may
+also occur outside the First-Gate forcing window, so the
+composite-gate cap is not by itself an upper bound for all
+survivors under a hypothetical First-Gate failure.  Its role
+here is to record the exact geometry of the residual
+composite ambiguity.
+\end{remark}
+
+
+\begin{computation}[Finite First-Gate verification]\label{comp:finite}
+The exact prime-table procedure described in the computational supplement tests the survivor predicate for all 1,225 blocks with $11\le q\le9973$, covering the even targets $122\le N<10007^2$. The recorded calculation finds no First-Gate failure. As a check on the sieve predicate, the first-survivor search was compared with the integer greatest-common-divisor definition for 2,450 deterministically selected targets (the first target and the target with the largest least survivor in each block), with no discrepancy. The underlying program and its exact output constitute the computational evidence for this finite statement.
+\end{computation}
+
+\begin{remark}[The finite range]
+Any analytic theorem of the form ``$P_c(N)>0$ for $N\ge N_1$'' that uses Theorem~\ref{thm:bv} has an ineffective $N_1$, through Siegel's theorem. The finite range that would have to be verified is therefore $N<N_1$, and it is unknown. This gap is independent of the parity problem (Section~\ref{sec:conclusion}).
+\end{remark}
+
+
+%======================================================================
+
+\section{The factorization architecture}\label{sec:block2}
+%======================================================================
+
+\begin{lemma}\label{lem:geometry}
+Let $N>12$ be even, $p\in\PP\cap\band$, $n=N-p$, and $\Pm(n)\ge z=(2N/3)^{1/3}$. Then either $n$ is prime, or $n=uv$ with primes $u\le v$ satisfying
+\[
+z\le u\le\sqrt{n}\le\sqrt{2N/3},\qquad \sqrt{N/2}\le\sqrt n\le v\le \frac{2N/3}{z}=z^2,\qquad u\nmid N .
+\]
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}
+\item If $\Omega(n)\ge3$, then $n\ge\Pm(n)^3\ge z^3=2N/3\ge n$. Equality forces $3\ell^3=2N$ with $\ell=\Pm(n)$, hence $\ell=2$ and $N=12$.
+\item So a composite such $n$ is $uv$ with $u=\Pm(n)\le v$, and the bounds follow from $u\le\sqrt n\le v$ and $v=n/u\le(2N/3)/z$.
+\item If $u\mid N$, then $u\mid p$, so $p=u$. But
+$u\le\sqrt n\le\sqrt{2N/3}<N/3\le p$ for $N>12$, a contradiction. \qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{lemma}\label{lem:omega-bound}
+Let $0<a\le1/3$, $w=N^a$, and let $n\in\cband$ be $w$-rough. Then $\Omega(n)<1/a$. In particular:
+\begin{itemize}
+\item for $a=1/5$: $\Omega(n)\le4$, and $n$ has at most $4$ distinct prime factors in $[y,z)$;
+\item for $a\ge1/6$: $\Omega(n)\le5$.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+$N^{a\Omega(n)}\le n<N$. \qedhere
+\end{proof}
+
+\begin{lemma}[Liouville parity on $z$-rough complements]\label{lem:parity}
+Under the hypotheses of Lemma~\ref{lem:geometry}, $\lambda(n)=-1$ if $n$ is prime and $\lambda(n)=+1$ otherwise. Consequently
+\[
+T_z(N)=P_c(N)+M_z(N),\qquad C_\lambda(N)=M_z(N)-P_c(N),\qquad P_c(N)=\tfrac12\bigl(T_z(N)-C_\lambda(N)\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+This is immediate from Lemma~\ref{lem:geometry}.  \qedhere
+\end{proof}
+
+\begin{lemma}[Full-band deep-cut parity identity]
+\label{lem:full-FG-parity}
+Let $q<r$ be consecutive odd primes, $X=q^2$, and let $N$ be an
+even target in $(X,r^2)$. With $\mathcal I_N^{\rm FG}$ the integer
+interval in Proposition~\ref{prop:full-FG-window}, put
+\[
+z_q=X^{1/3}=q^{2/3},\quad
+T_{z_q}^{\rm FG}(N)
+=\#\{p\in\PP\cap\mathcal I_N^{\rm FG}:\Pm(N-p)\ge z_q\},
+\]
+\[
+C_{\lambda,z_q}^{\rm FG}(N)
+=\sum_{\substack{p\in\PP\cap\mathcal I_N^{\rm FG}\\\Pm(N-p)\ge z_q}}\lambda(N-p),
+\qquad
+\mathcal I_N^{\rm FG}=[L_q(N),U_q(N)].
+\]
+Then
+\begin{equation}\label{eq:full-FG-parity}
+\boxed{\displaystyle
+2F_q(N)=T_{z_q}^{\rm FG}(N)-C_{\lambda,z_q}^{\rm FG}(N).}
+\end{equation}
+\end{lemma}
+\begin{proof}
+For each admissible anchor $p\le N/2$, its complement satisfies
+$N-p\ge N/2>X/2>z_q$ for all $q\ge11$, and
+$N-p<X$ by the exact full-band condition. If $N-p$ is $z_q$-rough,
+then $z_q^{\Omega(N-p)}\le N-p<X=z_q^3$, so
+$\Omega(N-p)\le2$. Thus the survivors are precisely prime or
+semiprime complements, with Liouville signs $-1$ and $+1$;
+all prime complements survive because they exceed $z_q$.
+Subtracting their signed sum from their count proves the identity.
+\end{proof}
+
+\begin{remark}[Limits of geometric restrictions]
+The factor-size inequalities localize the 3D semiprime terms and permit the switching estimate below. They do not by themselves distinguish a complement that is prime from one that has two or more prime factors. The additional information required for positivity is quantitative, as expressed by the difference $P_c=T_z-M_z$.
+\end{remark}
+
+%======================================================================
+\section{Unconditional shallow sieve positivity}\label{sec:block3}
+
+%======================================================================
+
+\begin{theorem}\label{thm:shallow}
+Let $y=N^{1/5}$ and $c_y=\tfrac23\log\tfrac32=0.270310\ldots$ For every $\eps>0$ there is $N_0(\eps)$ (ineffective) such that for all even $N\ge N_0(\eps)$
+\[
+\bigl(c_y-\eps\bigr)\frac{\Sg(N)N}{(\log N)^2}\ \le\ T_y(N)\ \le\ \bigl(\tfrac23+\eps\bigr)\frac{\Sg(N)N}{(\log N)^2}.
+\]
+In $\GG$-units the bounds are $4\log\tfrac32=1.62186\ldots$ and $4$. More generally, for $w=N^a$ with $1/8\le a\le1/4$, $T_w(N)\ge(4\log\frac{1-2a}{2a}-\eps)\GG(N)$.
+\end{theorem}
+
+\begin{proof}
+Apply Theorem~\ref{thm:linear-sieve} to the reflected sequence
+of Lemma~\ref{lem:density}, with sieve cutoff $y$ and
+$D=N^{1/2}(\log N)^{-B}$. Since every $N-p\ge N/2>y$,
+the sifted count equals $T_y(N)$. For $(d,2N)=1$ the remainder
+is $r_d=\pi(\band;d,N)-\pi(\band)/\varphi(d)$, and otherwise
+$r_d=0$; expressing the band count as a difference of two
+progression counts, Theorem~\ref{thm:bv} gives
+$R\ll_A N(\log N)^{-A}$ uniformly in even $N$.
+By Lemma~\ref{lem:density},
+\[
+XV(y)=\frac{5e^{-\gamma}}6\frac{\Sg(N)N}{(\log N)^2}(1+o(1)),
+\qquad s=\frac{\log D}{\log y}=\frac52+o(1).
+\]
+The explicit linear-sieve values
+$f(5/2)=\frac45e^\gamma\log(3/2)$ and
+$F(5/2)=\frac45e^\gamma$ give the stated two coefficients.
+For $w=N^a$, the same argument has $s=1/(2a)+o(1)$;
+using $f(s)=2e^\gamma\log(s-1)/s$ for $2\le s\le4$
+gives $4\log((1-2a)/(2a))$ in $\GG$-units.
+\end{proof}
+
+\begin{remark}[Normalization of the shallow coefficient]\label{rem:shallow-normalization}
+The coefficient $c_y=\frac23\log\frac32$ is expressed in $\Sg$-units. The anchor-band length contributes $\pi(\band)\sim N/(6\log N)$, and Bombieri--Vinogradov permits $s=5/2$ at $y=N^{1/5}$, with an ineffective uniform threshold.
+\end{remark}
+
+\section{Two-sided roughness beyond the half-depth barrier}\label{sec:two-sided}
+The central-band method holds one summand prime. A complementary two-sided sieve places no primality condition on either endpoint and instead requires both summands to be rough. Let $X=q^2$, $N=X+t$ with $0<t<r^2-X$, and put
+\[
+ J^*(N)=[\lceil X/4\rceil,\lfloor N-X/4\rfloor]\cap\mathbb Z.
+\]
+For $z\ge2$, write $B_z^{(2)}(N)$ for the integers $n\in J^*(N)$ such that both $n$ and $N-n$ are squarefree and have no prime factor less than $z$. The reflection $n\mapsto N-n$ preserves $J^*(N)$.
+
+\begin{theorem}[Two-sided roughness at depth $q^{0.548}$;
+computer-assisted numerical step]\label{thm:two-sided-0548}
+For all sufficiently large primes $q$ and every even $N\in(q^2,r^2)$,
+\[
+ |B^{(2)}_{q^{0.548}}(N)|\gg \frac{q^2}{(\log q)^2}.
+\]
+The threshold is ineffective. The analytic argument, including the short terminal sieve stages, is given in Appendix~\ref{app:SP-setting}. The final numerical comparison is an interval-arithmetic inequality stated in~\eqref{sp:eq:certified-margin}.
+\end{theorem}
+
+\begin{remark}
+Each surviving endpoint is at most $q^2$ and has at most three prime factors, counted with multiplicity, because $(q^{0.548})^4>q^2$. This theorem therefore gives many almost-prime decompositions, but no prime-pair positivity. Its numerical component is a deterministic interval-enclosure calculation described in Appendix~\ref{sp:sec:numerics}.
+\end{remark}
+
+\section{Switching, sieve constants and the deep-cut semiprime bound}\label{sec:block4}
+%======================================================================
+
+\subsection{The binomial identity}
+For $y$-rough $n\in\cband$, let $\nu(n)$ be the number of distinct primes of $[y,z)$ dividing $n$, and put
+\[
+D_j(N)=\sum_{\substack{p\in\PP\cap\band\\ \Pm(N-p)\ge y}}\binom{\nu(N-p)}{j}.
+\]
+
+\begin{proposition}\label{prop:binomial}
+With $y=N^{1/5}$,
+\[
+T_z(N)=T_y(N)-D_1(N)+D_2(N)-D_3(N)+D_4(N).
+\]
+The truncations satisfy the Bonferroni inequalities
+\[
+T_y-D_1\le T_z\le T_y-D_1+D_2,\qquad T_y-D_1+D_2-D_3\le T_z.
+\]
+Moreover $D_1-D_2+D_3-D_4=\sum_{y\le\ell<z}K_\ell$, where $K_\ell=\#\{p:\Pm(N-p)=\ell\}$ is the first-kill count.
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+\item For an integer $k\ge0$, $\sum_{j=0}^k(-1)^j\binom kj=[k=0]$, and the partial sums alternate in sign about $[k=0]$.
+\item A $y$-rough $n$ is $z$-rough if and only if $\nu(n)=0$, and $\nu(n)\le4$ by Lemma~\ref{lem:omega-bound}.
+\item Sum over $p$.
+\item The last identity holds because both sides count the $y$-rough complements that are not $z$-rough. \qedhere
+\end{enumerate}
+\end{proof}
+
+The binomial identity requires no distribution hypothesis. Bounding
+its $D_j$ separately loses the overlap cancellation; the Type~I
+barrier below applies to the unrefined sieve axioms, rather than to
+additional bilinear information about coordinated weights.
+
+\subsection{The Type~I barrier for \texorpdfstring{$T_z$}{Tz}}
+
+\begin{theorem}\label{thm:typeI-barrier}
+Suppose a lower bound for $T_z(N)=S(\mathcal A,z)$ is derived only from the hypotheses of Theorem~\ref{thm:linear-sieve} for $\mathcal A$, at level $D=N^{\theta+o(1)}$. Then it is at most $XV(z)(f(3\theta)+o(1))$. In particular it is $o(\GG(N))$ for every $\theta\le 2/3$, and hence for the Bombieri--Vinogradov level $\theta=1/2$.
+\end{theorem}
+
+\begin{proof}
+Here $s=\log D/\log z=3\theta+o(1)$, since $\log z=\frac13\log N+O(1)$. By Theorem~\ref{thm:sharp} no bound beyond $XV(z)(f(s)+o(1))$ follows from these hypotheses, and $f(s)=0$ for $s\le2$. This sharpness assertion concerns bounds obtained from the dimension-one sieve axioms for the unrefined sequence $\mathcal A$. It does not rule out exploiting independently proved bilinear correlations for particular coordinated $D_j$ weights. \qedhere
+\end{proof}
+
+\subsection{One-step switching in a specified model}
+
+Additional information comes from switching. For a first-kill piece with $\Pm(N-p)=\ell\sim N^\alpha$, count primes in the switched sequence $\{N-\ell m\}$ by an upper sieve. In the one-step sieve model this costs the constant $\kappa=2/\theta'$ when a level $\theta'$ and the required weighted remainder estimates are available for that switched sequence. A numerical choice of $\theta'$ in the optimization is not itself a theorem asserting this level for the actual first-kill coefficients. Alternatively, sieve $m$ directly. In $\GG$-units the direct piece constant is $K_{\rm dir}(\alpha)=F((\theta-\alpha)/\alpha)/(e^\gamma\omega((1-\alpha)/\alpha))$, and the first-kill density is
+\[
+w(\alpha)=\frac{\omega((1-\alpha)/\alpha)}{\alpha^2}.
+\]
+The best one-step lower bound for $T_z/\GG$ is
+\[
+R(\theta)=\sup_{x>3}\Bigl[xe^{-\gamma}f(\theta x)-\int_{1/x}^{1/3}\min\bigl(K_{\rm dir}(\alpha),\kappa\bigr)w(\alpha)\,d\alpha\Bigr].
+\]
+
+\begin{theorem}[closed form]\label{thm:closed-form}
+Let $1/2\le\theta\le1$ and $\kappa\in\{2/\theta,4\}$. Put
+\[
+\Phi_\theta(\alpha)=\frac2\theta\log\frac{\theta-\alpha}{\alpha}-\kappa\int_\alpha^{1/3}\frac{1+\log\frac{1-2t}{t}}{t(1-t)}\,dt .
+\]
+Then $R(\theta)=\max\bigl(0,\max_{1/4\le\alpha\le1/3}\Phi_\theta(\alpha)\bigr)$, and the inner maximum is attained at the unique root of
+\[
+\kappa\,w(\alpha)\,\alpha(\theta-\alpha)=2,
+\]
+or at $\alpha=1/3$ if there is no root.
+\end{theorem}
+
+\begin{proof}
+Write $B(x)$ for the expression in square brackets defining $R(\theta)$,
+put $\alpha=1/x$, and set
+$h(\alpha)=\min(K_{\rm dir}(\alpha),\kappa)w(\alpha)$.
+For $0<\alpha<\theta/4$, monotonicity of $F$ and
+$\omega\ge1/2$ give
+$K_{\rm dir}(\alpha)\le4/3\le\kappa$. For
+$\theta/4\le\alpha\le1/4$, the formula for $F$ gives
+\[
+ K_{\rm dir}(\alpha)\le\frac{4\alpha}{\theta-\alpha}
+ \le\frac1{\theta-1/4}\le\min(2/\theta,4)\le\kappa.
+\]
+Thus switching can improve the direct upper bound only for
+$1/4\le\alpha\le1/3$.
+
+In this latter interval, Buchstab's formula gives
+\[
+ w(\alpha)=\frac{1+\log((1-2\alpha)/\alpha)}
+                   {\alpha(1-\alpha)},
+ \qquad K_{\rm dir}(\alpha)w(\alpha)
+       =\frac{2}{\alpha(\theta-\alpha)}.
+\]
+(The second equality uses $0<(\theta-\alpha)/\alpha\le3$.)
+Set
+\[
+ G(\alpha)=\kappa w(\alpha)\alpha(\theta-\alpha)
+ =\kappa\left(1+\log\frac{1-2\alpha}{\alpha}\right)
+             \frac{\theta-\alpha}{1-\alpha}.
+\]
+Both positive factors decrease on $[1/4,1/3]$, so $G$ is
+strictly decreasing; also $G(1/4)>2$ throughout the stated parameter
+range. Consequently either $G=2$ has exactly one solution
+$\alpha_c\in(1/4,1/3]$, or $G>2$ throughout, in which case set
+$\alpha_c=1/3$. The direct coefficient is smaller than $\kappa$
+for $\alpha<\alpha_c$ (and exceeds it for $\alpha>\alpha_c$
+when a crossing exists).
+
+For $\theta x>2$, the differential equation for $f$ yields
+\[
+ B'(x)=\bigl(K_{\rm dir}(1/x)
+       -\min(K_{\rm dir}(1/x),\kappa)\bigr)
+                 \frac{w(1/x)}{x^2}\ge0.
+\]
+For $3<x<2/\theta$, however, $f(\theta x)=0$ and
+$B'(x)=-h(1/x)/x^2<0$. This preliminary decreasing interval
+must not be omitted when $\theta<2/3$. It follows that the
+supremum of $B$ is the larger of the endpoint limit
+$B(3^+)=3e^{-\gamma}f(3\theta)$ and its eventual constant
+value, attained for
+$x\ge\max(2/\theta,1/\alpha_c)$.
+
+If $\theta\ge2/3$, the lower-sieve formula holds throughout
+$3\le x\le4$ and $B(3^+)=\Phi_\theta(1/3)$.
+The eventual value equals $\Phi_\theta(\alpha_c)$ if
+$\alpha_c\le\theta/2$. For $\theta<2/3$,
+$B(3^+)=0$. If $\alpha_c>\theta/2$, the eventual value is
+\[
+ -\int_{\theta/2}^{1/3}\min(K_{\rm dir}(t),\kappa)w(t)\,dt\le0.
+\]
+In this case the inner maximum is also negative, since
+$\alpha_c>\theta/2$ makes
+$\log((\theta-\alpha_c)/\alpha_c)<0$, while the
+integral defining $\Phi_\theta(\alpha_c)$ is nonnegative.
+
+Finally,
+\[
+ \Phi_\theta'(\alpha)
+  =w(\alpha)(\kappa-K_{\rm dir}(\alpha)),
+\]
+which is nonnegative up to $\alpha_c$ and nonpositive
+thereafter. This locates the inner maximum and gives the stated
+closed form.\qedhere
+\end{proof}
+
+\subsection{The switched semiprime cap and the coefficient deficit}
+
+\begin{proposition}\label{prop:switched-cap}
+For every $\eps>0$ and all even $N\ge N_0(\eps)$ (ineffective),
+\[
+M_z(N)\le\bigl(\tfrac23\log2+\eps\bigr)\frac{\Sg(N)N}{(\log N)^2}=(4\log2+6\eps)\,\GG(N).
+\]
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+\item \textbf{Switch.} By Lemma~\ref{lem:geometry}, $M_z(N)$ is at most the number of primes in $\mathcal B=\{N-uv:\ z\le u\le v,\ u,v\in\PP,\ uv\in\cband\}$ (with multiplicity one). Choose a fixed $0<\delta<1/2$ and put $w=N^{1/4-\delta/2}$. Every element exceeds $N/3>w$, so the primes of $\mathcal B$ are counted by $S(\mathcal B,w)$.
+\item \textbf{Density.} For a prime $\ell<w<z$, $\ell\nmid uv$. Hence $\ell\mid N-uv$ is impossible if $\ell\mid 2N$, and otherwise means $uv\equiv N\pmod\ell$. So the density is $g(\ell)=1/(\ell-1)$ or $0$ exactly as in Lemma~\ref{lem:density}, and $V_{\mathcal B}(w)\sim\Sg(N)e^{-\gamma}/\log w$.
+\item \textbf{Remainders.} The bilinear distribution estimate in Lemma~\ref{lem:switched-localization} and the coprime-modulus reduction in \eqref{eq:switched-sieve-remainder} give $R\ll_{A,\delta}N(\log N)^{-A}$ for each fixed $0<\delta<1/2$ and $A>0$. No unrestricted distribution assertion for the constrained convolution is used.
+\item \textbf{Upper sieve.} With $D=w^2$ and $s=2$, Theorem~\ref{thm:linear-sieve}, with $F(2)=e^\gamma$, gives $S(\mathcal B,w)\le|\mathcal B|V_{\mathcal B}(w)(e^\gamma+o_{\delta}(1))$.
+\item \textbf{Size of $\mathcal B$.} $|\mathcal B|=\frac{N}{6\log N}(\log2+o(1))$, by the prime number theorem: the exponent of $u$ ranges over $[\frac13,\frac12]+o(1)$, with density $d\theta/(\theta(1-\theta))$ and $\int_{1/3}^{1/2}\frac{d\theta}{\theta(1-\theta)}=\log2$.
+\item \textbf{Combine.} For fixed $\delta>0$, the coefficient is $\frac{\log2}{6(1/4-\delta/2)}+o_{\delta}(1)$. Given $\eps>0$, first choose $\delta$ sufficiently small, and then $N$ sufficiently large, to obtain $\tfrac23\log2+\eps$. \qedhere
+\end{enumerate}
+\end{proof}
+
+\paragraph{Distribution input for the switched population.}
+The following localization follows from the sharp-cutoff bilinear
+Bombieri--Vinogradov estimate of Lemma~\ref{sp:lem:BBV}.
+
+\begin{lemma}[Localization of the switched semiprimes]
+\label{lem:switched-localization}
+Let $b_N(m)$ count unordered pairs of primes $z\le u\le v$ with
+$uv=m\in\cband$, where $x=2N/3$ and $z=x^{1/3}$.
+For any fixed $0<\delta<1/2$ and $A>0$, put $D=N^{1/2-\delta}$.
+Then
+\begin{equation}\label{eq:switched-localized-BV}
+\sum_{d\le D}\max_{(a,d)=1}
+\left|\sum_{\substack{m\equiv a\pmod d}}b_N(m)
+-\frac1{\varphi(d)}\sum_{(m,d)=1}b_N(m)\right|
+\ll_{A,\delta}\frac{N}{(\log N)^A}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Put $I=[N/2,x]$, and let
+$\iota(\ell)=\one_{\{\ell\in\PP,\ \ell\ge z\}}$.
+For integers $m\in I$,
+\[
+ b_N(m)=\tfrac12\bigl((\iota*\iota)(m)+\sigma(m)\bigr),
+ \qquad \sigma(m)=\one_{\{m=\ell^2,\ \ell\in\PP,\ \ell\ge z\}}.
+\]
+Indeed, nonsquare semiprimes have two ordered factorizations and
+prime squares have one. In any factorization $m=uv\le x$ with
+$u,v\ge z$, both factors are at most $x/z=x^{2/3}$.
+
+Partition $[z,x^{2/3}]$ into $O(\log x)$ half-open dyadic intervals
+$I_i=[P_i,2P_i)\cap[z,x^{2/3}]$, where $P_i=2^iz$. Set
+\[
+ b_i(v)=\one_{\{v\in I_i\cap\PP\}},\qquad
+ a_i(u)=\iota(u)\one_{\{u\le x/P_i\}}.
+\]
+For $m\in I$, every ordered factorization $m=uv$ contributes to
+exactly one $i$, and $u\le x/v\le x/P_i$. Thus
+\[
+ \one_I(m)(\iota*\iota)(m)
+ =\one_I(m)\sum_i(a_i*b_i)(m).
+\]
+For each $i$ the parameters $M_i=x/P_i$, $L_i=P_i$ satisfy
+$M_iL_i=x$ and $M_i,L_i\ge x^{1/3}$, and $|a_i|\le1$.
+Apply Lemma~\ref{sp:lem:BBV} with its exponent parameter $1/3$
+and with an arbitrary logarithmic saving $A'>A+1$.
+Since $D=N^{1/2-\delta}\le x^{1/2}(\log x)^{-B(A')}$
+for sufficiently large $N$, every dyadic piece contributes
+$O_{A',\delta}(x(\log x)^{-A'})$ to the discrepancy sum,
+uniformly for the interval $I$.
+The square term has at most $O(\sqrt x)$ nonzero values and
+contributes $O(D\sqrt x)=O(N^{1-\delta})$ in total.
+Summing the dyadic estimates proves the assertion. The sharp
+product restriction $m\in I$ is included in Lemma~\ref{sp:lem:BBV}.
+\end{proof}
+
+\noindent\emph{Sieve remainder.}
+To apply Theorem~\ref{thm:linear-sieve}, fix
+$0<\delta<1/2$, take $w=N^{1/4-\delta/2}$ and
+$D=N^{1/2-\delta}=w^2$, and use the sequence
+$\mathcal B$ in Proposition~\ref{prop:switched-cap}.
+For $d\mid P(w)$, every prime factor of $d$ is smaller than
+$w<z$, whereas every $m$ counted by $b_N$ has prime factors
+at least $z$. Consequently $(m,d)=1$ for all such $m$.
+If $(d,N)>1$, then $d\nmid N-m$, so both
+$|\mathcal B_d|$ and $g(d)|\mathcal B|$ vanish. If $(d,N)=1$,
+$N\pmod d$ is a reduced residue class and
+\[
+ r_d=|\mathcal B_d|-g(d)|\mathcal B|
+ =\sum_{m\equiv N\pmod d}b_N(m)
+ -\frac1{\varphi(d)}\sum_{(m,d)=1}b_N(m).
+\]
+Here $g(d)=1/\varphi(d)$, including when $d=1$.
+Thus \eqref{eq:switched-localized-BV} yields
+\begin{equation}\label{eq:switched-sieve-remainder}
+ R=\sum_{\substack{d<D\\d\mid P(w)}}|r_d|
+ \ll_{A,\delta}N(\log N)^{-A}
+ =o_\delta\!\left(|\mathcal B|V_{\mathcal B}(w)\right)
+ \qquad(A>3),
+\end{equation}
+since $|\mathcal B|\asymp N/\log N$ and
+$V_{\mathcal B}(w)\asymp_\delta1/\log N$.
+All implied constants here depend on the fixed margin $\delta$
+(and on $A$ in the remainder bound); no limit in $\delta$
+is taken before the limit $N\to\infty$.
+
+At the Bombieri--Vinogradov level $\theta=1/2$, the one-step
+model gives $R(1/2)=0$. Combining that lower bound with
+Proposition~\ref{prop:switched-cap} therefore leaves a deficit of
+$\frac23\log2$ in $\Sg(N)N/(\log N)^2$ units. An idealized
+switching level approaching $1$ lowers the semiprime upper-sieve
+coefficient only to $\frac13\log2$, while a positive Type~I lower
+bound for $T_z$ requires $\theta>2/3$. At the idealized level
+$\theta=1$ the model gives $R(1)=2\log2$ in $\GG$-units, exactly
+matching the limiting switched semiprime cap. These statements
+concern the specified coefficient model, not additional distribution
+theorems for the actual first-kill sequence.
+
+%======================================================================
+
+\section{Reflected-prime bilinear structure}\label{sec:block5}
+%======================================================================
+
+We consider
+\[
+\Sigma(N;a,b)=\sum_{\substack{m\asymp M,\ v\asymp V\\ mv\in\cband}}a_mb_v\Lambda(N-mv),\qquad MV\asymp N .
+\]
+
+\begin{theorem}[Type~I sums are Bombieri--Vinogradov-accessible]\label{thm:typeI-sums}
+Let $|a_m|\le1$ be arbitrary. Let $b_v=\sum_{e\mid v,\ e\le E}\beta_e$ with $|\beta_e|\le1$. Suppose $ME\le N^{1/2}(\log N)^{-B}$. Then
+\[
+\Sigma(N;a,b)=\sum_{m}\sum_{\substack{e\le E\\(me,N)=1}}\frac{a_m\beta_e}{\varphi(me)}\,\psi(N-J_m)\;+\;O_A\!\Bigl(\frac{N}{(\log N)^{A}}\Bigr),
+\]
+where $J_m=\cband\cap m[V,2V]$, $N-J_m=\{N-k:k\in J_m\}$ and $\psi(I)=\sum_{k\in I}\Lambda(k)$.
+\end{theorem}
+
+\begin{proof}
+Expanding $b_v$ and putting $n=mv$ gives
+\[
+\Sigma=\sum_m a_m\sum_{e\le E}\beta_e
+ \sum_{\substack{n\in J_m\\me\mid n}}\Lambda(N-n).
+\]
+For $d=me$ with $(d,N)=1$, the innermost sum counts
+$\Lambda(k)$ over $k\in N-J_m$ and $k\equiv N\pmod d$.
+Let
+\[
+\mathcal E_d=\max_{(a,d)=1}\max_{0\le t\le N}
+ \left|\psi(t;d,a)-\frac{\psi(t)}{\varphi(d)}\right|.
+\]
+The interval error is at most $2\mathcal E_d$.  Since a modulus
+$d=me$ occurs at most $\tau(d)$ times, the total error from
+coprime moduli is at most $2\sum_{d\le ME}\tau(d)\mathcal E_d$.
+For every fixed $A>0$, choose the logarithmic margin $B$ in
+$ME\le N^{1/2}(\log N)^{-B}$ sufficiently large.  The
+$\psi$-form of Bombieri--Vinogradov (with endpoint maxima) gives
+$\sum_{d\le ME}\mathcal E_d\ll_{A'}N(\log N)^{-A'}$
+for an arbitrarily large $A'$.  Moreover, the trivial progression
+estimate and $\varphi(d)^{-1}\ll (\log\log(3d))/d$ give
+$\mathcal E_d\ll N\log^2(2N)/d$; hence
+\[
+\sum_{d\le ME}\tau(d)^2\mathcal E_d
+ \ll N\log^2(2N)\sum_{d\le N}\frac{\tau(d)^2}{d}
+ \ll N(\log N)^6.
+\]
+Cauchy--Schwarz, applied as
+$\sum_d\tau(d)\mathcal E_d\le
+(\sum_d\mathcal E_d)^{1/2}
+(\sum_d\tau(d)^2\mathcal E_d)^{1/2}$,
+now gives $O_A(N(\log N)^{-A})$ by taking $A'$ large enough.
+
+If $(d,N)>1$, any nonzero $\Lambda(k)$ in the progression
+$k\equiv N\pmod d$ is supported on prime powers whose prime
+divides $N$.  Their total contribution for each $(m,e)$ is
+$O((\log N)^3)$; summing over at most $ME\le N^{1/2}$
+pairs is negligible compared with $N(\log N)^{-A}$.
+This establishes the asserted formula.  The argument uses the
+standard $\psi$-version of Bombieri--Vinogradov, rather than
+only the $\pi$-version written in Theorem~\ref{thm:bv}.
+\end{proof}
+
+\begin{proposition}[prime and Liouville coefficients are binary]\label{prop:binary}
+\begin{enumerate}
+\item With $a_m=1_\PP(m)1_{m\ge z}$, $b_v=1_\PP(v)$ and $m\le v$,
+$\Sigma(N;a,b)$ is the logarithmically weighted count of the
+semiprime terms whose factors lie in the specified $(m,v)$ ranges,
+up to $O(\sqrt N\log N)$ from proper prime powers of $N-mv$.
+Summing over disjoint factor ranges recovers the logarithmically
+weighted $M_z(N)$ up to the same prime-power error.
+\item With $a_m=\lambda(m)$, $b_v=\lambda(v)$, restricted to $z$-rough $mv$, the sum is exactly a weighted reflected convolution
+$\sum_{n\in\cband}\lambda(n)\tau_{M,V}(n)\Lambda(N-n)$, where $\tau_{M,V}(n)$ counts the admissible factorizations $n=mv$ in the ranges of $\Sigma$. It is not identical to $C_\lambda(N)+P_c(N)$.
+\item An asymptotic for either sum at a single $N$, uniform in arbitrary bounded coefficients on the balanced range, specializes to a pointwise asymptotic for $N=P_2+P_2$ or $N=p+P_2$. These are binary problems that are open.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Parts~1 and~2 follow by grouping the terms according to $n=mv$; in part~1 the error counts proper prime powers $N-mv$ and is $O(\sqrt N\log N)$ for the restricted semiprime population. For part~3, take prime coefficients; then the variables $(m,v)$ and the factors of $N-mv$ play symmetric roles. \qedhere
+\end{proof}
+
+\begin{remark}[Distribution requirements]\label{rem:classification}
+The reflected-prime sums fall into four classes.
+\begin{itemize}
+\item \textbf{Using established distribution inputs}: Type~I sums with sieve-weight or smooth $b_v$ and combined modulus $\le N^{1/2-\eps}$ use ordinary Bombieri--Vinogradov (Theorem~\ref{thm:typeI-sums}). The switched semiprime upper sieve in Proposition~\ref{prop:switched-cap} uses the bilinear estimate of Lemma~\ref{sp:lem:BBV}, localized in Lemma~\ref{lem:switched-localization}.
+\item \textbf{Requiring stronger distribution}: estimates beyond the square-root level. Well-factorable weighted versions of such estimates exist \cite{BFI86}, but do not control the arbitrary fixed-$N$ prime correlations required here. Improving an upper-sieve distribution level does not itself remove the parity obstruction.
+\item \textbf{Equivalent to (or containing) the desired existence}: prime- or Liouville-coefficient sums at a single $N$ (Proposition~\ref{prop:binary}). After Cauchy--Schwarz in $m$, the off-diagonal is a correlation of primes along the pairs of linear forms $N-mv,\ N-mv'$. Dispersion would need a smooth variable longer than about $N^{1/2}/M$. At fixed $N$, with prime coefficients, the Heath-Brown decomposition of $\Lambda(N-mv)$ leaves Type~II$\times$Type~II terms in $kl+mv=N$ with no such variable. Character-sum and large-sieve methods control these sums only in mean square over $N$, which gives almost-all results.
+
+\end{itemize}
+\end{remark}
+
+%======================================================================
+
+\section{An unconditional almost-all First-Gate theorem}
+\label{sec:almost-all}
+%======================================================================
+
+The prime-square restriction holds for almost all even targets, by published
+Goldbach asymptotics and the fact that consecutive prime squares are separated
+by $o(q^2)$. In particular, the classical almost-all weighted Goldbach
+asymptotic (Theorem~\ref{thm:PP-Goldbach}, applied dyadically) gives, for every
+fixed $A>0$ and all but $O_A(X(\log X)^{-A})$ even $N\in(X/2,X]$,
+\[
+R_{\rm ord}(N):=\#\{(p_1,p_2)\in\PP^2:p_1+p_2=N\}
+=(1+o(1))\Sg(N)\frac{N}{(\log N)^2}.
+\]
+The error is uniform on the nonexceptional set. Since $\Sg(N)\gg1$ for even
+$N$, these targets have $R_{\rm ord}(N)\gg N/(\log N)^2$.
+
+\begin{theorem}[Unconditional density-one First-Gate theorem]
+\label{thm:almost-all-FG}
+Let $E_{\rm FG}(X)$ be the number of even integers $N\le X$,
+$N\ge122$, which fail the First-Gate condition of
+Conjecture~\ref{conj:fg} in their corresponding prime-square block.
+Then for every fixed $A>0$,
+\[
+ \boxed{E_{\rm FG}(X)\ll_A\frac{X}{(\log X)^A}.}
+\]
+Consequently, First-Gate holds for a natural-density-one set of even
+integers.
+\end{theorem}
+
+\begin{proof}
+It suffices to consider large even $N$ outside the exceptional set
+of the preceding classical almost-all Goldbach asymptotic.
+Let $q<r$ be consecutive odd primes with $q^2<N<r^2$, and write
+$N=q^2+t$.  The Baker--Harman--Pintz prime-gap estimate
+\cite{BHP2001} gives $r-q\ll q^{0.525}$; hence
+\[
+ 0<t<r^2-q^2=(r-q)(r+q)\ll q^{1.525}
+ \ll N^{0.7625}.
+\]
+Put $T=\max\{t,q-1\}$. Since $q\le\sqrt N$, we obtain
+$T\ll N^{0.7625}$.
+
+At most $2\pi(T)$ ordered Goldbach representations of $N$ have
+$\min(p_1,p_2)\le T$: choose the smaller prime, after which its
+complement is determined, and allow the two orderings.  Therefore
+\[
+ \#\{(p_1,p_2)\in\PP^2:p_1+p_2=N,
+                 \ \min(p_1,p_2)\le T\}
+ \le2\pi(T)\ll N^{0.7625}
+ =o\!\left(\frac{N}{(\log N)^2}\right).
+\]
+For a sufficiently large nonexceptional $N$, the classical lower
+bound for $R_{\rm ord}(N)$ exceeds this contribution. Thus there are
+primes $p\le p'$ with $p+p'=N$ and $p>T$.
+In particular, $p\ge q$ and $p>t$, while
+\[
+ p'=N-p<q^2+t-t=q^2.
+\]
+Also $p\le p'<q^2$.  Hence $p,p'\in[q,q^2)$, exactly as required.
+
+Finally, apply the classical exceptional-set estimate separately on
+dyadic intervals $(X/2^{j+1},X/2^j]$, with a slightly larger logarithmic
+exponent than the prescribed $A$, and absorb the finitely many bounded
+integers.  Summation yields $E_{\rm FG}(X)\ll_A X/(\log X)^A$.
+\end{proof}
+
+\subsection{Blockwise central-band first moments}
+\label{subsec:blockwise-reflection}
+
+We average reflected prime pairs over a prime-square block, using an almost-all
+short-interval prime theorem. For earlier short-interval Goldbach results see
+Goldston~\cite{Goldston1990}.
+
+Let $q<r$ be consecutive odd primes, and set
+\[
+ X=q^2,\qquad H=r^2-q^2,\qquad I_X=[2X/5,9X/20],\qquad
+ B_X(N)=\#\{p\in\PP\cap I_X:N-p\in\PP\}.
+\]
+Since $r/q\to1$ by the prime number theorem, $H=o(X)$; and since
+$r-q\ge2$, we have $H\ge4q+4\gg X^{1/2}$.  If $q$ is sufficiently
+large and $X<N<X+H$, then every representation counted by $B_X(N)$
+has $N/3\le p\le N/2$ and both primes in $[q,q^2)$.  Thus
+\begin{equation}\label{eq:blockwise-B-P}
+ 0\le B_X(N)\le P_c(N),\qquad
+ B_X(N)>0\ \Longrightarrow\ \text{$N$ satisfies First-Gate}.
+\end{equation}
+
+The Guth--Maynard short-interval theorem (Theorem~\ref{thm:GM-short-primes})
+applies since $H\gg X^{1/2}$. Outside $O_A(X(\log X)^{-A})$
+exceptional integer starts $t\asymp X$ it gives
+\begin{equation}\label{eq:short-pi-blockwise}
+\pi(t+H)-\pi(t)=(1+o(1))H/\log X.
+\end{equation}
+
+\begin{proposition}[Restricted reflected prime first moment]
+\label{prop:blockwise-restricted-moment}
+As $q\to\infty$ through primes,
+\[
+ \sum_{\substack{X<N<X+H\\N\text{ even}}}B_X(N)
+ \sim \frac{XH}{20(\log X)^2}.
+\]
+\end{proposition}
+\begin{proof}
+Reverse the order of summation.  Since $X$ and $X+H$ are odd and
+$p\in I_X$ is odd, neither excluded endpoint can equal $p$ plus a
+prime in the range considered.  Thus
+\[
+ \sum_{\substack{X<N<X+H\\N\text{ even}}}B_X(N)
+ =\sum_{p\in\PP\cap I_X}
+   \bigl(\pi(X+H-p)-\pi(X-p)\bigr).
+\]
+The starting points $t=X-p$ lie in $[11X/20,3X/5]$.
+By Theorem~\ref{thm:GM-short-primes} and
+\eqref{eq:short-pi-blockwise}, all except
+$O_A(X(\log X)^{-A})$ of these integer starts contribute
+$(1+o(1))H/\log X$.  Every exceptional start contributes at most $H$.
+Taking $A>3$, their total is $o(XH/(\log X)^2)$.
+Finally the prime number theorem gives
+$\#(\PP\cap I_X)\sim X/(20\log X)$, proving the assertion.
+\end{proof}
+
+\begin{theorem}[Blockwise central-band first moment]
+\label{thm:blockwise-central-moment}
+For consecutive odd primes $q<r$ and $X=q^2$, $H=r^2-q^2$,
+\begin{equation}\label{eq:blockwise-central-asymptotic}
+ \boxed{\displaystyle
+ \sum_{\substack{q^2<N<r^2\\N\text{ even}}}P_c(N)
+ \sim\frac{q^2(r^2-q^2)}{6(\log(q^2))^2}}
+ \qquad(q\to\infty).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Introduce two intervals fixed for the block:
+\[
+ I_-=[(X+H)/3,X/2],\qquad
+ I_+=[X/3,(X+H)/2].
+\]
+For every $N\in(X,X+H)$, a prime $p\in I_-$ lies in
+$[N/3,N/2]$; conversely, every $p\in[N/3,N/2]$ belongs to $I_+$.
+The sum on the left side of \eqref{eq:blockwise-central-asymptotic}
+is therefore bounded below and above, respectively, by
+\[
+ \sum_{p\in\PP\cap I_\pm}
+   \bigl(\pi(X+H-p)-\pi(X-p)\bigr).
+\]
+The proof of Proposition~\ref{prop:blockwise-restricted-moment}
+applies to both intervals.  Their lengths are
+$X/6-H/3$ and $X/6+H/2$, respectively, and therefore both are
+$(1/6+o(1))X$.  By the ordinary prime number theorem, both contain
+$(1/6+o(1))X/\log X$ primes.  The same uniform short-interval
+prime count \eqref{eq:short-pi-blockwise}, with a negligible
+exceptional-start contribution, makes each bounding sum
+$(1+o(1))XH/(6(\log X)^2)$.  This proves the result.
+\end{proof}
+
+\begin{lemma}[Local second moment of the singular series]
+\label{lem:short-singular-second}
+For $X\ge3$ and $1\le H\le X$,
+\[
+ \sum_{X<N\le X+H}\Sg(N)^2\ll H+(\log X)^6.
+\]
+\end{lemma}
+\begin{proof}
+For odd squarefree $d$, put
+$a(d)=\prod_{\ell\mid d}(\ell-2)^{-1}$, and otherwise put $a(d)=0$.
+Then
+\[
+ \Sg(N)=2C_2\sum_{d\mid N}a(d),\qquad
+ a(d)\le\frac{3^{\omega(d)}}d,
+ \qquad\sum_{d\le2X}a(d)\ll(\log X)^3.
+\]
+Expanding the square and counting multiples of $[d,e]$ gives
+\begin{align*}
+ \sum_{X<N\le X+H}\Sg(N)^2
+ &\ll \sum_{d,e\le2X}a(d)a(e)
+            \left(\frac{H}{[d,e]}+1\right)\\
+ &\ll H\prod_{\ell>2}
+          \left(1+\frac{2a(\ell)+a(\ell)^2}{\ell}\right)
+       +(\log X)^6.
+\end{align*}
+The Euler product converges since $a(\ell)=O(1/\ell)$.
+\end{proof}
+
+%======================================================================
+\subsection{A local no-long-runs theorem}
+\label{subsec:short-window-failures}
+%======================================================================
+
+Keep $X,H,I_X$ and $B_X$ as above. The next short-interval input
+extends the reflected-prime argument to subintervals of each block.
+
+\begin{theorem}[Guth--Maynard, Corollary 1.4~\cite{GuthMaynard}]
+\label{thm:GM-short-primes}
+For fixed $\eta>0$ and $Y^{2/15+\eta}\le L\le Y^{0.99}$,
+all but $O_\eta(Y\exp(- (\log Y)^{1/4}))$ integer
+$t\in[Y,2Y]$ satisfy
+\[
+ \pi(t+L)-\pi(t)=\frac{L}{\log t}
+   +O_\eta\!\left(L\exp(- (\log Y)^{1/4})\right).
+\]
+\end{theorem}
+
+\begin{theorem}[Local no-long-runs theorem]
+\label{thm:local-no-long-runs}
+For each fixed $\eps>0$ there exist absolute $c_1,c_2>0$ and
+$q_0(\eps)$ such that, if $q<r$ are consecutive odd primes,
+$q\ge q_0(\eps)$, and $U,L$ are integers with
+\[
+ q^2\le U<U+L\le r^2,\qquad L\ge(q^2)^{2/15+\eps},
+\]
+then at least $c_1L$ even integers $N\in(U,U+L]$ satisfy
+\[
+ B_{q^2}(N)\ge c_2\frac{q^2}{(\log(q^2))^2}.
+\]
+Thus all these $N$ satisfy First-Gate. Taking $U=q^2$ and
+$L=r^2-q^2$ gives the blockwise positive-proportion conclusion;
+no consecutive run of failed even targets can fill an interval
+of the stated length.
+\end{theorem}
+
+\begin{proof}
+Write $X=q^2$, $K=X/(\log X)^2$.  By the Baker--Harman--Pintz
+gap estimate already used in Theorem~\ref{thm:almost-all-FG},
+$H\ll X^{0.7625}$, so $L\le H\le (X/2)^{0.99}$ for large $X$.
+For $p\in\PP\cap I_X$ put $t=U-p$.  Uniformly in the stated range,
+$t\in[X/2,X]$ when $X$ is large.  Apply Theorem~\ref{thm:GM-short-primes}
+with $Y=X/2$ and a slightly smaller positive exponent margin.
+At most $O_\eps(X\exp(-c(\log X)^{1/4}))$ integer starting
+points are exceptional, for some absolute $c>0$.  At every other
+start, $\pi(t+L)-\pi(t)=(1+o(1))L/\log X$.
+The exceptional starts contribute at most $O(L+1)$ each.
+Since $\#(\PP\cap I_X)\sim X/(20\log X)$, reversing the order
+of summation yields, uniformly in $U,L$,
+\begin{equation}\label{eq:local-short-first-moment}
+ \sum_{\substack{U<N\le U+L\\N\ \mathrm{even}}} B_X(N)
+   =(1+o(1))\frac{XL}{20(\log X)^2}.
+\end{equation}
+The standard upper-bound sieve for the two linear forms gives $B_X(N)\ll\Sg(N)K$.  Applying
+Lemma~\ref{lem:short-singular-second} to the interval of length $L$
+gives
+\[
+ \sum_{\substack{U<N\le U+L\\N\ \mathrm{even}}}B_X(N)^2
+   \ll K^2\bigl(L+(\log X)^6\bigr)\ll LK^2.
+\]
+Take $c_2$ less than half the constant in the first moment.
+The targets with $B_X(N)<c_2K$ contribute at most $c_2LK$;
+Cauchy--Schwarz then implies that $\gg L$ remaining targets
+have $B_X(N)\ge c_2K$.  Equation~\eqref{eq:blockwise-B-P}
+converts these representations into First-Gate representations.
+For the full-block conclusion, fix $\eps=1/10$ and take
+$U=X$, $L=H$. Since $H\ge4q+4\gg X^{1/2}$, the length
+hypothesis holds; the endpoints $q^2,r^2$ are odd and therefore
+contribute no even targets. Thus at least $c_1H$ of the $H/2$
+even targets in the block satisfy First-Gate.
+\end{proof}
+
+\begin{theorem}[Full First-Gate band: uniform local first moment]
+\label{thm:full-FG-local}
+Let $q<r$ be consecutive odd primes, $X=q^2$,
+$H=r^2-q^2$, and let $F_q(N)$ be the exact First-Gate count in
+\eqref{eq:full-FG-count}. For every fixed $\eps>0$, uniformly for
+integer $U,L$ satisfying
+\[
+X\le U<U+L\le X+H,\qquad L\ge X^{2/15+\eps},
+\]
+we have, as $q\to\infty$,
+\begin{equation}\label{eq:FG-full-local-first-moment}
+\boxed{\displaystyle
+\sum_{\substack{U<N\le U+L\\N\ \mathrm{even}}}F_q(N)
+=(1+o_{\eps}(1))\frac{XL}{2(\log X)^2}.}
+\end{equation}
+In particular, for the entire consecutive-prime-square block,
+\begin{equation}\label{eq:FG-full-block-first-moment}
+\sum_{\substack{q^2<N<r^2\\N\ \mathrm{even}}}F_q(N)
+\sim\frac{q^2(r^2-q^2)}{2(\log(q^2))^2}.
+\end{equation}
+The leading coefficient is three times that of
+Theorem~\ref{thm:blockwise-central-moment}.
+\end{theorem}
+\begin{proof}
+We use Theorem~\ref{thm:GM-short-primes} in the same form and
+with the same almost-all-starts uniformity as in the proof of
+Theorem~\ref{thm:local-no-long-runs}. The prime-gap estimate gives
+$H\ll X^{0.7625}=o(X)$, so in particular $L\le X^{0.99}$
+for large $X$.
+Fix $0<\eta<1/8$. Every prime
+$\eta X\le p\le(1/2-\eta)X$ is an admissible smaller
+anchor for every $N$ in the block once $X$ is sufficiently large:
+indeed $p>H\ge N-X$, $p\ge q$, and $p<N/2$.
+Reversing the order of summation, its contribution is
+\[
+\sum_{\substack{p\in\PP\\\eta X\le p\le(1/2-\eta)X}}
+\bigl(\pi(U+L-p)-\pi(U-p)\bigr)
+=(1/2-2\eta+o_\eps(1))\frac{XL}{(\log X)^2}.
+\]
+Here the prime number theorem counts the anchors, while the
+Guth--Maynard theorem estimates the short reflected interval for all
+but $O_\eps(X\exp(-c(\log X)^{1/4}))$ integer starting points;
+their total contribution is negligible by the trivial bound $L+1$.
+This is a lower bound for the left side of
+\eqref{eq:FG-full-local-first-moment}.
+
+Conversely every smaller anchor is at most $N/2\le(X+H)/2$,
+so the full left side is at most
+\[
+\sum_{\substack{p\in\PP\\3\le p\le(X+H)/2}}
+\bigl(\pi(U+L-p)-\pi(U-p)\bigr)
+=(1/2+o_\eps(1))\frac{XL}{(\log X)^2}.
+\]
+All reflected starting points here lie in $[X/2+o(X),X+H]$,
+which is covered by two dyadic ranges of scale $X$. The same
+almost-all short-interval theorem therefore applies uniformly.
+The reverse summation counts any diagonal prime pair $N=2p$
+exactly once, as required. The parity restriction causes no loss
+since $p$ and $N-p$ are both odd primes in the relevant ranges. Letting $\eta\to0$ proves
+\eqref{eq:FG-full-local-first-moment}. The case $U=X,L=H$
+proves \eqref{eq:FG-full-block-first-moment}; the endpoints $X,X+H$
+are odd and therefore contribute no even targets.
+\end{proof}
+
+\begin{corollary}[Full-band local abundance]
+\label{cor:full-FG-local-abundance}
+For every fixed $\eps>0$ there are $c_1,c_2>0$ and
+$q_0(\eps)$ such that every interval $(U,U+L]$ as in
+Theorem~\ref{thm:full-FG-local}, with $q\ge q_0(\eps)$, contains
+at least $c_1L$ even targets satisfying
+\[
+F_q(N)\ge c_2\frac{q^2}{(\log(q^2))^2}.
+\]
+\end{corollary}
+\begin{proof}
+Write $K=X/(\log X)^2$. The standard upper-bound sieve gives
+$F_q(N)\ll\Sg(N)K$, and Lemma~\ref{lem:short-singular-second} gives
+$\sum_{U<N\le U+L,\,2\mid N}F_q(N)^2\ll LK^2$.
+Combine this with the first moment in Theorem~\ref{thm:full-FG-local}
+and apply Cauchy--Schwarz after discarding targets with
+$F_q(N)<c_2K$ for a sufficiently small fixed $c_2$.
+\end{proof}
+
+
+\subsection{Almost all targets in each block: a short-interval Goldbach input}
+\label{subsec:PP-blockwise}
+
+First moments alone do not bound the proportion of unsuccessful targets.
+For this we use the Perelli--Pintz short-interval weighted Goldbach
+asymptotic~\cite{PerelliPintz93}, in the form recorded by
+Languasco~\cite[p.~327]{Languasco95}.
+
+\begin{theorem}[Perelli--Pintz short-interval Goldbach asymptotic; quoted input]
+\label{thm:PP-Goldbach}
+Fix $\eta>0$ and $A,B>0$. Let $Y$ be sufficiently large and
+$Y^{1/3+\eta}\le L\le Y$. Put
+\[
+R_\Lambda(n)=\sum_{a+b=n}\Lambda(a)\Lambda(b).
+\]
+For all but $O_{\eta,A,B}(L(\log Y)^{-B})$ even integers
+$n\in[Y,Y+L]$, one has
+\[
+R_\Lambda(n)=n\Sg(n)+O_{\eta,A,B}(Y(\log Y)^{-A}).
+\]
+\end{theorem}
+
+The $1/3+\eta$ exponent is the range used for the full weighted
+representation asymptotic, rather than the smaller exponent associated
+with a restricted representation count.
+
+\begin{theorem}[Uniform local almost-all First-Gate theorem]
+\label{thm:PP-FG-local}
+For any fixed $\eps>0$ and $A>0$, let $q<r$ be consecutive odd
+primes, $X=q^2$, and $H=r^2-q^2$. Uniformly for integers $U,L$ with
+\[
+X\le U<U+L\le X+H,\qquad L\ge X^{1/3+\eps},
+\]
+we have, as $q\to\infty$,
+\[
+\boxed{\#\{N\in(U,U+L]:\ N\text{ even and First-Gate fails}\}
+\ll_{\eps,A}\frac{L}{(\log X)^A}.}
+\]
+The conclusion is unconditional, but relies on
+Theorem~\ref{thm:PP-Goldbach} as an external input.
+\end{theorem}
+
+\begin{proof}
+Throughout, $U\asymp X$ and $L\le H=o(X)$. Apply
+Theorem~\ref{thm:PP-Goldbach} at the starting point $Y=U$,
+with exponent margin $\eps/2$ and logarithmic exponents larger
+than $A$. Since $L\ge X^{1/3+\eps}$ and $U\asymp X$, its length
+hypothesis holds uniformly for all sufficiently large $q$.
+Outside $O_{\eps,A}(L(\log X)^{-A})$ exceptional even targets,
+choose the error exponent large enough to obtain
+\[
+R_\Lambda(N)\ge\tfrac12N\Sg(N)\gg X,
+\]
+using $\Sg(N)\gg1$ on even integers.
+
+Write $N=X+t$. The Baker--Harman--Pintz prime-gap estimate gives
+$0<t<H\ll X^{0.7625}$. Put $T=\max\{q-1,t\}$, so
+$T\ll X^{0.7625}$. In the weighted Goldbach sum, pairs of
+\emph{primes} with at least one member at most $T$ contribute
+at most $2\pi(T)(\log(2X))^2\ll X^{0.7625}(\log X)^2=o(X)$.
+Pairs involving a proper prime power contribute at most
+$O(X^{1/2}(\log X)^2)=o(X)$, since there are $O(X^{1/2})$
+proper prime powers below $2X$ and the complementary value is
+fixed by $N$. Hence at least one remaining pair consists of
+primes $a\le b$ with $a>T$ and $a+b=N$. This forces
+$a\ge q$ and $b=N-a<X$; consequently $a,b\in[q,q^2)$.
+Only the exceptional even targets from the quoted Goldbach theorem
+can fail First-Gate, which proves the claim.
+\end{proof}
+
+\begin{corollary}[Almost all targets in every prime-square block]
+\label{cor:PP-FG-block}
+For every $A>0$ and all sufficiently large consecutive odd primes
+$q<r$, writing $X=q^2$ and $H=r^2-q^2$, we have
+\[
+\boxed{\#\{N:q^2<N<r^2,\ 2\mid N,\ N\text{ fails First-Gate}\}
+\ll_A\frac{H}{(\log X)^A}.}
+\]
+In particular, a proportion $1-o(1)$ of the even targets in
+\emph{each} sufficiently large block satisfy First-Gate.
+\end{corollary}
+\begin{proof}
+The prime-square gap satisfies $H\ge4q+4\gg X^{1/2}$ and
+$H=o(X)$, so choose any fixed $\eps\in(0,1/6)$ in
+Theorem~\ref{thm:PP-FG-local} with $U=X$ and $L=H$.
+Both endpoints are odd and hence excluded automatically.
+\end{proof}
+
+The local almost-all conclusion concerns the full First-Gate interval,
+not necessarily the central band. It leaves isolated failures possible
+and supplies no pointwise cancellation between the factor strata.
+
+\subsection{An unconditional dimensional average and the missing estimate}
+\label{subsec:dimensional-average}
+
+\begin{proposition}[First moment of the central-band count]
+\label{prop:central-first-moment}
+Unconditionally, as $X\to\infty$,
+\[
+\sum_{\substack{X<N\le2X\\N\ \mathrm{even}}}P_c(N)
+\sim \frac{X^2}{4(\log X)^2},
+\qquad
+\sum_{\substack{X<N\le2X\\N\ \mathrm{even}}}
+ (T_z(N)-C_\lambda(N))
+\sim\frac{X^2}{2(\log X)^2}.
+\]
+\end{proposition}
+\begin{proof}
+The first sum counts prime pairs $(p,n)$ with
+$X<p+n\le2X$ and $(p+n)/3\le p\le(p+n)/2$.
+All primes in this region have size comparable to $X$.
+By the prime number theorem, using a finite rectangular partition
+of the scaled region and letting the mesh tend to zero, this count is
+asymptotic to its Euclidean area divided by $(\log X)^2$.
+Writing $s=p+n$ in the area integral, the permitted interval
+for $p$ has length $s/6$.  Thus the area is
+$\int_X^{2X}s\,ds/6=X^2/4$.
+The prime pairs are odd--odd for large $X$, so their sums are even.
+The second identity follows by summing
+$T_z-C_\lambda=2P_c$ from Lemma~\ref{lem:parity}.
+\end{proof}
+
+\begin{proposition}[Sufficient averaged fluctuation bound]
+\label{prop:dimensional-variance}
+For fixed $c>0$, define
+\[
+V_c(X)=\sum_{\substack{X<N\le2X\\N\ \mathrm{even}}}
+\left(\frac{T_z(N)-C_\lambda(N)}2
+             -\frac{cX}{(\log X)^2}\right)^2.
+\]
+Then
+\[
+\#\{X<N\le2X:N\ \mathrm{even},\ P_c(N)=0\}
+\le\frac{(\log X)^4}{c^2X^2}V_c(X).
+\]
+In particular $V_c(X)=o(X^3/(\log X)^4)$ implies
+$P_c(N)>0$ for all but $o(X)$ even targets in $(X,2X]$.
+\end{proposition}
+\begin{proof}
+Every zero of $P_c(N)$ contributes precisely
+$c^2X^2/(\log X)^4$ to $V_c(X)$.  Summing proves the inequality.
+\end{proof}
+
+The first moment does not imply the required variance bound: it would
+require additional cancellation in signed prime--Liouville correlations.
+The almost-all theorems above instead use published Goldbach inputs.
+
+%======================================================================
+
+\section{Liouville parity and conditional positivity criteria}\label{sec:parity}
+%======================================================================
+
+\subsection{The obstruction}
+By Lemma~\ref{lem:parity}, $P_c>0$ is equivalent to $C_\lambda(N)<T_z(N)$. The identity itself contains no estimate.
+
+Consider the parity twins $\tilde a^{\pm}_p=1\pm\lambda(N-p)$, which are nonnegative weights on the band primes:
+\begin{itemize}
+\item if $\lambda(N-p)$ is equidistributed in the progressions to moduli $\le N^{\theta}$, both twins satisfy the same Type~I axioms as $\mathcal A$;
+\item the twin $\tilde a^{+}$ has no prime complements and gives $T_z=2M_z$.
+\end{itemize}
+This illustrates Selberg's parity principle: a proof of $P_c>0$ must distinguish the shifted Liouville weights from a sequence with no prime complements.
+
+\subsection{A combined weighted inequality}
+
+\begin{lemma}\label{lem:combined}
+Let $w\le z$, and let $\rho(n)=\sum_{d\mid(n,P(w)),\ d<D}\rho_d$ satisfy $\rho(n)\le1_{\Pm(n)\ge w}$ for all $n$. Then
+\[
+\#\{p\in\PP\cap\band:\Pm(N-p)\ge w,\ \Omega(N-p)\ \text{odd}\}\ \ge\ \frac12\sum_{p}\rho(N-p)-\frac12\sum_{d}\rho_d\sum_{\substack{p\in\PP\cap\band\\ d\mid N-p}}\lambda(N-p).
+\]
+For $w=z$ the left side is $P_c(N)$. For $w=N^{a}$ with $1/6\le a\le 1/5$ it is $P_c+N_3+N_5$, where $N_k$ counts the $w$-rough complements with $\Omega=k$.
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}
+\item $\frac{1-\lambda(n)}2=1_{\Omega(n)\ \text{odd}}\ge0$ and $1_{\Pm(n)\ge w}-\rho(n)\ge0$, so the product of the two nonnegative differences gives
+\[
+\sum_p1_{\Pm\ge w}\tfrac{1-\lambda}{2}\ge\sum_p\rho\,\tfrac{1-\lambda}{2}.
+\]
+\item Expand $\rho$.
+\item The identification of the left side follows from Lemmas~\ref{lem:geometry} and~\ref{lem:omega-bound}. \qedhere
+\end{enumerate}
+\end{proof}
+
+The first term in Lemma~\ref{lem:combined} is accessible to a Type~I
+sieve; the second is a shifted-prime Liouville correlation and requires
+parity-sensitive cancellation.
+
+\subsection{Hypotheses}
+
+\begin{hypothesis}[$\mathrm{EH}(\theta)$, fixed residue; coprime moduli]\label{hyp:EH-corrected}
+For every fixed $A>0$, uniformly in even $N$,
+\[
+\sum_{\substack{d\le N^\theta,\ d\mid P(z)\\ (d,2N)=1}}
+\left|\pi(\band;d,N)-\frac{\pi(\band)}{\varphi(d)}\right|
+\ll_A\frac{N}{(\log N)^A}.
+\]
+For moduli $(d,2N)>1$ the reflected sequence has no terms divisible by $d$, because each anchor prime exceeds the prime factors of $d$. Its correct sieve main term is therefore zero, not $\pi(\band)/\varphi(d)$.
+\end{hypothesis}
+
+\begin{hypothesis}[$\mathrm{H}_\lambda(\theta,w)$, Liouville orthogonality to shifted primes]
+$\displaystyle\sum_{d\le N^{\theta},\ d\mid P(w)}\Bigl|\sum_{\substack{p\in\PP\cap\band\\ p\equiv N\,(d)}}\lambda(N-p)\Bigr|=o\Bigl(\frac{N}{(\log N)^2}\Bigr)$, uniformly in even $N$.
+\end{hypothesis}
+
+\begin{hypothesis}[$\mathrm{SW}_3(\theta')$, switched three/five-factor upper estimate]\label{hyp:SW3-revised}
+Fix $a\in[1/6,1/5]$ and write $w=N^a$. Let $N_k(N;a)$ count prime anchors $p\in\PP\cap\mathcal I_N$ for which $N-p$ is $w$-rough with $\Omega(N-p)=k$. Assume, uniformly for even $N$, that
+\[
+N_3(N;a)+N_5(N;a)\le\left(\frac2{\theta'}+o(1)\right)
+\bigl(I_3(a)+I_5^{\rm ub}(a)\bigr)\mathfrak G(N),
+\]
+where $I_3(a)=\int_a^{1/3}\frac{\log((1-2t)/t)}{t(1-t)}\,dt$ and
+$I_5^{\rm ub}(a)=\frac{(1-5a)^4}{4!\,5!\,a^5}$. This is the precise \emph{pointwise switched upper estimate} needed in the argument. It is not claimed to follow merely from a distribution statement with incorrectly constant local densities for large prime moduli.
+\end{hypothesis}
+
+\begin{hypothesis}[$\mathrm{M}$, semiprime asymptotic]
+$M_z(N)\le(\log2+\eps)\GG(N)$ for every $\eps>0$ and all large $N$.
+\end{hypothesis}
+
+The fixed-residue hypothesis $\mathrm{EH}(\theta)$ follows from
+Bombieri--Vinogradov when $\theta<1/2$, but its extension toward level
+$1$ is open. The $d=1$ term of $\mathrm H_\lambda$ already demands
+pointwise shifted-prime Liouville cancellation, not implied by
+$\mathrm{EH}$. Hypotheses $\mathrm{SW}_3$ and $\mathrm M$ are likewise
+unproved pointwise upper bounds, with $\mathrm M$ stronger than
+Proposition~\ref{prop:switched-cap}.
+
+\subsection{Conditional theorems}
+
+\begin{theorem}[Conditional~A: deep cut]\label{thm:condA}
+Let $2/3<\theta\le1$. Assume $\mathrm{EH}(\theta)$ and $\mathrm{H}_\lambda(\theta,z)$. Then for every $\eps>0$ and $N\ge N_0$,
+\[
+P_c(N)\ge\Bigl(\frac{\log(3\theta-1)}{\theta}-\eps\Bigr)\GG(N).
+\]
+
+\end{theorem}
+
+\begin{proof}
+\begin{enumerate}
+\item Take $\rho$ to be the Jurkat--Richert lower-bound weights of level $D=N^\theta$ for sifting to $z$.
+\item By $\mathrm{EH}(\theta)$ and Theorem~\ref{thm:linear-sieve} with $s=3\theta+o(1)\in(2,3]$, the first term of Lemma~\ref{lem:combined} is $\ge\frac12XV(z)(f(3\theta)-\eps)$.
+\item Since $|\rho_d|\le1$, the second term is bounded in absolute value by $\frac12$ times the sum in $\mathrm{H}_\lambda$, hence $o(\GG)$.
+\item Finally $\frac12XV(z)f(3\theta)=\frac12\cdot\frac{N}{6\log N}\cdot\frac{3\Sg e^{-\gamma}}{\log N}\cdot\frac{2e^\gamma\log(3\theta-1)}{3\theta}(1+o(1))$. \qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{theorem}[Conditional B: odd-$\Omega$ switching]\label{thm:condB}
+Fix $1/6\le a\le1/5$ and $w=N^a$. Suppose that for some $\theta'>0$,
+\begin{equation}\label{eq:condB-gap}
+2\log\frac{1-2a}{2a}>\frac2{\theta'}\left(I_3(a)+I_5^{\rm ub}(a)\right).
+\end{equation}
+Assume $\mathrm H_\lambda(1/2-\varepsilon,w)$ for every sufficiently small fixed $\varepsilon>0$ and the pointwise hypothesis $\mathrm{SW}_3(\theta')$ at $a$. Then $P_c(N)\gg\GG(N)$ for all sufficiently large even $N$.
+\end{theorem}
+\begin{proof}
+The combined inequality, the dimension-one lower sieve at any fixed level $1/2-\varepsilon$ and $\mathrm H_\lambda$ give
+\[
+P_c+N_3+N_5\ge\left(2\log\frac{1-2a}{2a}-o_\varepsilon(1)-O_a(\varepsilon)\right)\GG.
+\]
+By $\mathrm{SW}_3(\theta')$,
+\[
+N_3+N_5\le\left(\frac2{\theta'}+o(1)\right)(I_3(a)+I_5^{\rm ub}(a))\GG.
+\]
+Choose $\varepsilon$ sufficiently small in terms of the strict gap in~\eqref{eq:condB-gap}, then subtract. This yields $P_c(N)\gg\GG(N)$.
+\end{proof}
+\begin{remark}
+The term $N_3$ is the 4D complement stratum. For $a<1/5$, $N_5$ is an auxiliary six-variable odd-$\Omega$ stratum beyond the principal four-dimensional hierarchy. The hypothesis is a pointwise estimate for factor-restricted products, not a consequence of Bombieri--Vinogradov for unrestricted primes.
+\end{remark}
+
+\begin{theorem}[Conditional~C: one-step switched lower bound]\label{thm:condC}
+Suppose $\theta\in(2/3,1]$ and $\kappa\in\{2/\theta,4\}$ are such that $R(\theta)>\log2$ in the model of Theorem~\ref{thm:closed-form}. Suppose in addition that, for every sufficiently large even $N$, the \emph{actual} first-kill estimates yield
+\[
+T_z(N)\ge(R(\theta)-o(1))\GG(N),
+\]
+and that Hypothesis $\mathrm M$ holds. Then $P_c(N)>0$ for every sufficiently large even $N$.
+\end{theorem}
+\begin{proof}
+Use $P_c=T_z-M_z$, the assumed first-kill lower bound and $M_z\le(\log2+o(1))\GG$. The strict coefficient inequality gives positivity.
+\end{proof}
+
+\section{Conclusion}\label{sec:conclusion}
+The central-band geometry isolates four prime-factor strata and places all of them in a common range. At $N^{1/5}$ the 2D through 5D populations appear in one nonnegative rough-sieve count. The deeper cut removes the 4D and 5D terms, and a switched prime-product sieve gives a quantitative bound for the remaining 3D semiprimes. The exact identity $2P_c=T_z-C_\lambda$ identifies the pointwise parity correlation that is not controlled by these separate bounds. The $q^{0.548}$ two-sided theorem demonstrates positivity for paired almost-primes under a different sifting arrangement, without resolving this correlation.
+
+The density-one, blockwise almost-all and local-window theorems show that the prime-square restriction holds for most target integers. These conclusions follow from published distribution results and do not exclude isolated exceptions. The conditional criteria in Section~\ref{sec:parity} describe stronger pointwise distribution or cancellation estimates sufficient for positivity of the 2D stratum. The First-Gate conjecture and binary Goldbach remain open.
+
+\appendix
+\section{Paired roughness at \texorpdfstring{$q^{0.548}$}{q to the 0.548}: first-kill proof}\label{app:SP-setting}
+The following appendix gives the analytic first-kill argument. It complements, but does not replace,
+the prime-anchored estimates in the main text. All constants and parameters
+are internal to this appendix.
+
+\subsection{Statement of the first-kill criterion}\label{sp:sec:setting}
+
+Let $q<r$ be consecutive odd primes, $X=q^2$, and $N=q^2+t$ even with
+$0<t<r^2-q^2$. Since $r/q\to1$, $t=o(X)$ uniformly over the block. Write
+$P^-(n)$ for the least prime factor of $n>1$, with $P^-(1)=+\infty$, and call
+$n$ \emph{$z$-rough} if $P^-(n)\ge z$. For the two-sided argument put
+$J_N=[t+1,X-1]\cap\mathbb Z$ and
+\[
+ A_z(N)=\{n\in J_N:\ P^-(n)\ge z,\ P^-(N-n)\ge z\}.
+\]
+We work on the reflection-invariant subinterval
+\begin{equation}\label{sp:eq:interval}
+ J=J_N^*=\bigl[\lceil X/4\rceil,\ \lfloor N-X/4\rfloor\bigr]\cap\mathbb Z,
+ \qquad |J|=\Bigl(\tfrac12+o(1)\Bigr)X .
+\end{equation}
+For all sufficiently large $q$ one has $J\subseteq J_N$, $n\mapsto N-n$ maps
+$J$ onto itself, and $J\subseteq[X/4,X]$. For $z\ge2$ define
+\begin{equation}\label{sp:eq:paired}
+ B_z(N)=\bigl\{n\in J:\ \mu^2(n)=\mu^2(N-n)=1,\ P^-(n)\ge z,\ P^-(N-n)\ge z\bigr\}
+ \subseteq A_z(N).
+\end{equation}
+
+The linear-sieve functions $F,f$ are the continuous solutions of
+\begin{gather*}
+ F(s)=\frac{2e^\gamma}{s}\quad(0<s\le3),\qquad f(s)=0\quad(0<s\le2),\\
+ (sF(s))'=f(s-1)\quad(s>3),\qquad (sf(s))'=F(s-1)\quad(s>2),
+\end{gather*}
+and $\omega$ is Buchstab's function: $\omega(u)=1/u$ for $1\le u\le2$ and
+$(u\omega(u))'=\omega(u-1)$ for $u>2$. For $0<a<b<1/3$ and $0\le\varepsilon<1/2$
+put
+\begin{equation}\label{sp:eq:E}
+ \E(a,b,\varepsilon)=\frac{2a^2}{\omega(1/a)}\int_a^b
+ \omega\!\Bigl(\frac{1-\alpha}{\alpha}\Bigr)
+ F\!\Bigl(\frac{1/2-\varepsilon}{\alpha}\Bigr)\frac{d\alpha}{\alpha^3}.
+\end{equation}
+
+\begin{theorem}[First-kill criterion]\label{sp:thm:criterion}
+Let $0<\varepsilon<1/6$ and $0<a<b<1/3$ with $a\le(1/2-\varepsilon)/2$, and suppose
+\begin{equation}\label{sp:eq:criterion}
+ f\!\Bigl(\frac{1/2-\varepsilon}{a}\Bigr)>\E(a,b,\varepsilon).
+\end{equation}
+Then there are $c=c(a,b,\varepsilon)>0$ and $q_0=q_0(a,b,\varepsilon)$ such that for every
+prime $q\ge q_0$ and every even $N\in(q^2,r^2)$,
+\[
+ |A_{X^b}(N)|\ \ge\ |B_{X^b}(N)|\ \ge\ c\,\frac{X}{(\log X)^2}.
+\]
+The constant $q_0$ is ineffective.
+\end{theorem}
+
+Theorem~\ref{thm:two-sided-0548} follows from the first-kill criterion using the parameters
+$a=2/25$, $b=137/500$ and $\varepsilon=10^{-4}$, since
+$X^{137/500}=q^{0.548}$ and the interval calculation in~\eqref{sp:eq:certified-margin} gives
+$f(6.24875)-\mathcal E(2/25,137/500,10^{-4})>4.2055\times10^{-4}$.
+
+\begin{remark}[Scope]\label{sp:rem:scope}
+(i) For depths $q^\theta$ with $\theta<1/2$ the conclusion is classical: sieving
+$\{N-p:\ p\in J\text{ prime}\}$ by the linear sieve with the
+Bombieri--Vinogradov theorem at level $X^{1/2-\varepsilon}$ gives
+$|A_{q^\theta}(N)|\gg X/(\log X)^2$, because $p$ is prime and $N-p$ is
+$X^{\theta/2}$-rough. The range $1/2\le\theta\le0.548$ is the content of
+Theorem~\ref{thm:two-sided-0548}.
+(ii) First-Gate requires depth $q$, at which roughness below $q^2$ is primality.
+Depth $q^{0.548}$ remains far from the depth $q$ needed for First-Gate.
+\end{remark}
+
+% -------------------------------------------------------------
+\subsection{The convolution weight}\label{sp:sec:weight}
+
+Fix $0<a<1/4$, put $y=X^a$, let $\beta_y(n)=\one_{\{n\ \mathrm{prime},\ n\ge y\}}$,
+$K=\lfloor1/a\rfloor+1$, and
+\begin{equation}\label{sp:eq:U}
+ U_y(n)=\sum_{k=1}^K\frac1{k!}\,\beta_y^{*k}(n)\qquad(1\le n\le X),
+\end{equation}
+where $*$ is Dirichlet convolution.
+
+\begin{lemma}[Multiplicity formula]\label{sp:lem:weight}
+For $1<n\le X$: $U_y(n)=0$ unless $n$ is $y$-rough, and if
+$n=\prod_{i=1}^s p_i^{e_i}$ is $y$-rough then $U_y(n)=1/(e_1!\cdots e_s!)$.
+In particular $U_y(n)=1$ on squarefree $y$-rough $n$, and $0\le U_y\le1$.
+\end{lemma}
+
+\begin{proof}
+$\beta_y^{*k}(n)$ counts ordered $k$-tuples of primes $\ge y$ with product $n$.
+This is $0$ unless $n$ is $y$-rough with $k=\sum_ie_i$ prime factors, in which
+case it is $k!/\prod_ie_i!$. Since $y^k\le n\le X$ forces $k\le1/a<K$, the
+term $k=\sum_ie_i$ is present in \eqref{sp:eq:U}.
+\end{proof}
+
+\begin{lemma}[Nonsquarefree rough integers]\label{sp:lem:squarefull}
+For any interval $I\subseteq[1,X]$,
+\[
+ \#\{n\in I:\ P^-(n)\ge y,\ \mu^2(n)=0\}\ \le\ \sum_{y\le p\le\sqrt X}\Bigl(\frac{|I|}{p^2}+1\Bigr)
+ \ \ll\ X^{1-a}+X^{1/2}.
+\]
+Consequently $0\le\sum_{n\in I}\bigl(\one_{\{P^-(n)\ge y\}}-U_y(n)\bigr)\ll X^{1-a}+X^{1/2}$.
+\end{lemma}
+
+\begin{proof}
+A nonsquarefree $y$-rough $n\le X$ is divisible by $p^2$ for a prime
+$y\le p\le\sqrt X$. Sum the number of multiples and use
+$\sum_{p\ge y}p^{-2}\ll1/y$. The second claim follows from
+Lemma~\ref{sp:lem:weight}.
+\end{proof}
+
+% -------------------------------------------------------------
+\subsection{Level of distribution}\label{sp:sec:distribution}
+
+For a sequence $c$ supported on positive integers, an interval $I$, a modulus
+$d$ and $(h,d)=1$, put
+\begin{equation}\label{sp:eq:delta}
+ \Delta_c(d,h;I)=\sum_{\substack{n\in I\\ n\equiv h\ (d)}}c(n)
+ -\frac1{\varphi(d)}\sum_{\substack{n\in I\\ (n,d)=1}}c(n).
+\end{equation}
+
+\begin{lemma}[Primes]\label{sp:lem:BV}
+For every $A>0$ there is $B=B(A)$ such that for $x\ge3$, every interval
+$I\subseteq[1,x]$ and $Q\le x^{1/2}(\log x)^{-B}$,
+\[
+ \sum_{d\le Q}\max_{(h,d)=1}\bigl|\Delta_{\one_\PP}(d,h;I)\bigr|\ll_A\frac{x}{(\log x)^A}.
+\]
+\end{lemma}
+
+\begin{proof}
+The Bombieri--Vinogradov theorem
+\cite{Bombieri65,Vinogradov65}, \cite[Ch.~28]{Davenport}, with partial
+summation, gives
+$\sum_{d\le Q}\max_{w\le x}\max_{(h,d)=1}|\pi(w;d,h)-\mathrm{li}(w)/\varphi(d)|\ll_A x(\log x)^{-A}$;
+differencing at the two endpoints of $I$ handles $I$. The main term in
+\eqref{sp:eq:delta} is $(\pi(I)-\#\{p\mid d:p\in I\})/\varphi(d)$, and
+$|\pi(I)-\mathrm{li}(I)|\ll x(\log x)^{-A-1}$ by the prime number theorem, while
+$\sum_{d\le Q}\omega(d)/\varphi(d)\ll(\log x)^2$.
+\end{proof}
+
+The next lemma is the standard bilinear form of the Bombieri--Vinogradov
+theorem (compare Motohashi \cite{Motohashi76} and
+Bombieri--Friedlander--Iwaniec \cite[Theorem~0]{BFI86}). We give a complete
+proof in the form needed, because the uniformity in the interval, in the
+residue and in the auxiliary coprimality must be explicit.
+
+\begin{lemma}[Bilinear Bombieri--Vinogradov]\label{sp:lem:BBV}
+Let $A>0$, $0<\delta<1$, $c_1\ge1$, and put $B=A+2$. Let $x$ be large,
+$M,L\ge x^\delta$ with $ML\le x$, let $(a_m)$ satisfy $|a_m|\le c_1$ and be
+supported on $1\le m\le M$, let $I_0\subseteq[L,2L]$ be an interval and
+$b(\ell)=\one_{\{\ell\in I_0\ \mathrm{prime}\}}$. Put $c=a*b$. Then for every
+interval $I\subseteq[1,2x]$ and $Q\le x^{1/2}(\log x)^{-B}$,
+\[
+ \sum_{d\le Q}\max_{(h,d)=1}|\Delta_c(d,h;I)|\ \ll_{A,\delta,c_1}\ \frac{x}{(\log x)^A}.
+\]
+The implied constant is ineffective and does not depend on $I$, $Q$, $(a_m)$
+or $I_0$.
+\end{lemma}
+
+\begin{proof}
+\emph{Step 1 (characters).} Since $c(k)$ is supported on integers, we may
+assume $I=(u,v]$ with $u,v\in\mathbb Z+\tfrac12$ and $\tfrac12\le u<v\le2x+\tfrac12$.
+For $(h,d)=1$, orthogonality gives
+$\Delta_c(d,h;I)=\varphi(d)^{-1}\sum_{\chi\ne\chi_0}\bar\chi(h)S(\chi)$ with
+$S(\chi)=\sum_{k\in I}c(k)\chi(k)$, so
+$\max_h|\Delta_c(d,h;I)|\le\varphi(d)^{-1}\sum_{\chi\ne\chi_0\,(d)}|S(\chi)|$.
+Each nonprincipal $\chi\bmod d$ is induced by a unique primitive $\chi^*\bmod r$
+with $1<r\mid d$. Writing $s=d/r$, one has $\chi(k)=\chi^*(k)\one_{(k,s)=1}$, and
+$\one_{(m\ell,s)=1}=\one_{(m,s)=1}\one_{(\ell,s)=1}$. Hence, with
+$a^{(s)}_m=a_m\one_{(m,s)=1}$, $b^{(s)}(\ell)=b(\ell)\one_{(\ell,s)=1}$ and
+$\varphi(rs)\ge\varphi(r)\varphi(s)$,
+\begin{equation}\label{sp:eq:BBV-split}
+ \sum_{d\le Q}\max_{(h,d)=1}|\Delta_c(d,h;I)|
+ \le\sum_{s\le Q}\frac1{\varphi(s)}\sum_{1<r\le Q/s}\frac1{\varphi(r)}
+ \sideset{}{^*}\sum_{\chi\ (r)}|S_s(\chi)|,\qquad
+ S_s(\chi)=\sum_{m\ell\in I}a^{(s)}_mb^{(s)}(\ell)\chi(m\ell).
+\end{equation}
+Let $R_0=(\log x)^{A+4}$ and split according to $r\le R_0$ or $r>R_0$.
+
+\emph{Step 2 (small conductors).} For $1<r\le R_0$ and primitive $\chi\bmod r$,
+\[
+ |S_s(\chi)|\le\sum_{m\le M}|a_m|\,\Bigl|\sum_{\substack{\ell\in I_0\cap(u/m,v/m]\\ \ell\ \mathrm{prime},\ (\ell,s)=1}}\chi(\ell)\Bigr|.
+\]
+The inner sum is a difference of two partial sums
+$\sum_{\ell\le w,\ \ell\ \mathrm{prime}}\chi(\ell)$ with $L\le w\le2L$, minus at
+most $\omega(s)\le2\log x$ terms. Since $\log w\ge\delta\log x$, we have
+$r\le R_0\le(\log w)^{A+5}$ for large $x$, so the Siegel--Walfisz theorem
+\cite[Ch.~22]{Davenport} gives
+$\sum_{\ell\le w}\chi(\ell)\one_\PP(\ell)\ll_A w\exp(-c_A\sqrt{\log w})$
+(sum $\chi(h)\pi(w;r,h)$ over residues $h$; the main terms cancel). Therefore
+$|S_s(\chi)|\ll c_1M\bigl(L e^{-c_A\sqrt{\delta\log x}}+\log x\bigr)$, and since
+$\sum^*_{\chi\,(r)}1\le\varphi(r)$ and $\sum_{s\le Q}1/\varphi(s)\ll\log x$,
+the part of \eqref{sp:eq:BBV-split} with $r\le R_0$ is
+$\ll c_1R_0(\log x)\bigl(x\,e^{-c_A\sqrt{\delta\log x}}+M\log x\bigr)\ll x(\log x)^{-A}$,
+using $M\le x^{1-\delta}$.
+
+\emph{Step 3 (separation of the interval).} For real $\beta$, $\lambda>0$ and $T\ge1$,
+\begin{equation}\label{sp:eq:perron}
+ \frac1\pi\int_{-T}^{T}e^{i\beta t}\frac{\sin\lambda t}{t}\,dt
+ =\one_{|\beta|<\lambda}+O\Bigl(\frac1{T\,\bigl||\beta|-\lambda\bigr|}\Bigr).
+\end{equation}
+Indeed the odd part of the integrand integrates to $0$; the even part is
+$\frac{1}{2t}\bigl(\sin(\lambda+\beta)t+\sin(\lambda-\beta)t\bigr)$, and
+$\frac1\pi\int_{-T}^T\frac{\sin\kappa t}{t}dt=\operatorname{sgn}\kappa+O(1/(T|\kappa|))$
+by integrating by parts on $[T,\infty)$. Put $\theta=\frac12\log(uv)$ and
+$\lambda=\frac12\log(v/u)\le\log(4x+1)$. For an integer $1\le k\le2x$ we have
+$k\in I$ iff $|\log k-\theta|<\lambda$, and
+$\bigl||\log k-\theta|-\lambda\bigr|\ge\min(|\log k-\log u|,|\log k-\log v|)\ge1/(5x)$.
+With $T=x^3$, apply \eqref{sp:eq:perron} to each pair $(m,\ell)$ with
+$a_mb(\ell)\ne0$. By the support hypotheses there are at most
+$M(L+1)\le ML+M\le2x$ such pairs. (Without using the supports one would only
+know $m\ell\le2x$, and then the number of pairs is at most
+$\sum_{k\le2x}\tau(k)\ll x\log x$; either bound suffices below.) Each pair
+contributes an error $\le c_1\cdot O(x/T)$, so in total
+\[
+ S_s(\chi)=\frac1\pi\int_{-T}^{T}e^{-i\theta t}\,\frac{\sin\lambda t}{t}\,
+ \mathcal A_s(\chi,t)\,\mathcal B_s(\chi,t)\,dt+O\Bigl(\frac{c_1x^2\log x}{T}\Bigr)
+\]
+for every primitive $\chi$ (the factor $\log x$ covers the cruder pair count),
+where $\mathcal A_s(\chi,t)=\sum_{m\le M}a^{(s)}_mm^{it}\chi(m)$ and
+$\mathcal B_s(\chi,t)=\sum_{\ell}b^{(s)}(\ell)\ell^{it}\chi(\ell)$. Since
+$|\sin(\lambda t)/t|\le\min(\lambda,1/|t|)$ and
+$\int_{-T}^T\min(\lambda,1/|t|)dt\le2+2\log(\lambda T)\le7\log x$,
+\begin{equation}\label{sp:eq:sep}
+ \sum_{R_1<r\le2R_1}\frac{1}{\varphi(r)}\sideset{}{^*}\sum_{\chi\ (r)}|S_s(\chi)|
+ \le 7\log x\ \sup_{|t|\le T}\sum_{R_1<r\le2R_1}\frac1{\varphi(r)}
+ \sideset{}{^*}\sum_{\chi\ (r)}|\mathcal A_s(\chi,t)\mathcal B_s(\chi,t)|+O\Bigl(\frac{c_1R_1^2x^2\log x}{T}\Bigr).
+\end{equation}
+Summed over all $s\le Q$ and all dyadic $R_1\le Q$, the last term is
+$O(c_1Q^3x^2(\log x)^2/x^3)=O(c_1x^{1/2}(\log x)^2)$, which is negligible.
+
+\emph{Step 4 (large conductors).} The multiplicative large sieve
+\cite[Ch.~27]{Davenport} states that for any complex $(\xi_n)$ supported on an
+interval of length $N_0$,
+$\sum_{r\le R}\frac{r}{\varphi(r)}\sum^*_{\chi\,(r)}|\sum_n\xi_n\chi(n)|^2\le(N_0+R^2)\sum_n|\xi_n|^2$.
+Using $1/\varphi(r)\le R_1^{-1}\,r/\varphi(r)$ for $r>R_1$, Cauchy--Schwarz, and
+$\|a^{(s)}\|_2\le c_1M^{1/2}$, $\|b^{(s)}\|_2\le(L+1)^{1/2}$,
+\begin{align*}
+ &\sum_{R_1<r\le2R_1}\frac1{\varphi(r)}
+       \sideset{}{^*}\sum_{\chi}|\mathcal A_s\mathcal B_s|\\
+ &\qquad\le\frac{c_1\sqrt{2ML}}{R_1}
+   \sqrt{(M+4R_1^2)(L+1+4R_1^2)}\\
+ &\qquad\ll c_1\left(R_1x^{1/2}+\frac{x}{L^{1/2}}
+             +\frac{x}{M^{1/2}}+\frac{x}{R_1}\right).
+\end{align*}
+uniformly in $t$, where $ML\le x$ was used. Summing over dyadic
+$R_1\in[R_0,Q]$, inserting into \eqref{sp:eq:sep}, and summing over $s$ with
+$\sum_{s\le Q}1/\varphi(s)\ll\log x$, the part of \eqref{sp:eq:BBV-split} with
+$r>R_0$ is
+\[
+ \ll c_1(\log x)^2\Bigl(Qx^{1/2}+x^{1-\delta/2}\log x+\frac{x}{R_0}\Bigr)
+       +O\bigl(c_1x^{1/2}(\log x)^2\bigr)
+ \ll c_1x\bigl((\log x)^{2-B}+(\log x)^{-A-2}+x^{-\delta/3}\bigr).
+\]
+With $B=A+2$ this is $\ll x(\log x)^{-A}$. Steps 2 and 4 prove the lemma.
+\end{proof}
+
+\begin{remark}[Comparison with the published theorems]\label{sp:rem:BFI}
+Bombieri--Friedlander--Iwaniec \cite[Theorem~0(b), p.~212]{BFI86} assume
+(A$_1$) $\alpha$ supported on $m\sim M=x^{1-\theta}$ and $\beta$ on $n\sim N=x^\theta$
+with $\varepsilon\le\theta\le1-\varepsilon$, and (A$_2$) the Siegel--Walfisz
+condition for $\beta$ with an auxiliary coprimality parameter $d$:
+$\sum_{n\equiv l\,(k),\,(n,d)=1}\beta_n-\varphi(k)^{-1}\sum_{(n,dk)=1}\beta_n
+\ll\|\beta\|N^{1/2}\tau(d)^B(\log N)^{-A}$. They conclude
+$\sum_{q\le Q}\max_{(a,q)=1}|\Delta_{\alpha*\beta}(x;q,a)|\ll\|\alpha\|\|\beta\|x^{1/2}(\log x)^{-A}$
+for $Q=x^{1/2}(\log x)^{-B_1}$. Their proof writes
+$\Delta_{\alpha*\beta}$ as $\varphi(q)^{-1}\sum_{\chi\ne\chi_0}\bar\chi(a)
+(\sum\alpha_m\chi(m))(\sum\beta_n\chi(n))$, i.e.\ for the \emph{complete}
+convolution with no cutoff on $mn$. The DHJ Polymath formulation
+GEH$[\vartheta]$ \cite[Claim~2.6]{Polymath2014}, proved for $\vartheta<1/2$ by
+Motohashi \cite{Motohashi76} (\cite[Theorem~2.8]{Polymath2014}), likewise
+concerns complete convolutions of sequences supported on $[N,2N]$ and $[M,2M]$
+with $x^\varepsilon\le N,M\le x^{1-\varepsilon}$. Polymath handles sharp
+cutoffs separately, by splitting into intervals $[N,(1+\log^{-A}x)N]$ and
+discarding the pieces that meet the boundary. Lemma~\ref{sp:lem:BBV} is
+Theorem~0(b) together with a sharp cutoff $mn\in I$, handled by Step~3 instead
+of a short-interval splitting. For prime-supported $\beta$, (A$_2$) is the
+Siegel--Walfisz theorem, since the condition $(n,d)=1$ removes at most
+$\omega(d)$ primes. Only $\beta$ is required to satisfy (A$_2$): the cofactor
+$\alpha$ may be an arbitrary bounded sequence.
+\end{remark}
+
+\begin{proposition}[Distribution of $U_y$]\label{sp:prop:distU}
+Fix $0<a<1/4$ and $A>0$. Choose $B$ so that
+$B\ge\max\{A+3,B_{\mathrm{BV}}(A+1)\}$, where
+$B_{\mathrm{BV}}(A+1)$ is admissible in Lemma~\ref{sp:lem:BV}
+with exponent $A+1$. For every interval $I\subseteq[1,X]$,
+\begin{equation}\label{sp:eq:DistU}
+ \sum_{d\le X^{1/2}(\log X)^{-B}}\max_{(h,d)=1}|\Delta_{U_y}(d,h;I)|\ \ll_{a,A}\ \frac{X}{(\log X)^A}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By \eqref{sp:eq:U} it suffices to treat $\beta_y^{*k}$ for $1\le k\le K$. For $k=1$,
+$\beta_y=\one_\PP-\one_{\PP\cap[1,y)}$; the first part is Lemma~\ref{sp:lem:BV}
+with $x=X$, and the second contributes at most
+$\sum_{d\le X^{1/2}}2\pi(y)\ll X^{1/2+a}$. For $k\ge2$, peel off the last prime
+factor:
+\[
+ \beta_y^{*k}=\beta_y*\beta_y^{*(k-1)},
+\]
+which is an identity of functions. Split $\beta_y$ dyadically,
+$\beta_y=\sum_{P}\beta_y\one_{[P,2P)}$ over $P=2^iy<X$; there are $\ll\log X$
+pieces. For $n\in I\subseteq[1,X]$ and a prime $\ell\in[P,2P)$, the cofactor
+satisfies $m=n/\ell\le X/P$. So on $I$ the $P$-piece equals $a*b$ with
+$a_m=\beta_y^{*(k-1)}(m)\one_{m\le X/P}$ (so $|a_m|\le(k-1)!$) and $b$ the
+indicator of primes in $I_0=[P,2P)$. If $X/P<y^{k-1}$ the piece vanishes;
+otherwise $M=X/P\ge y=X^a$ and $L=P\ge X^a$, with $ML=X$. Lemma~\ref{sp:lem:BBV}
+with $x=X$, $\delta=a$, $c_1=(k-1)!$ and $A+1$ in place of $A$ bounds each
+piece by $X(\log X)^{-A-1}$; summing over the $\ll\log X$ pieces and the $K$
+values of $k$ gives \eqref{sp:eq:DistU}.
+\end{proof}
+
+Fix $0<a<b<1/3$, put $Y=X^b$, and define stages
+$z_0=y$, $z_{j+1}=\min(2z_j,Y)$, $I_j=[z_j,z_{j+1})$ for $0\le j<J_0$, where
+$J_0\ll\log X$ is the first index with $z_{J_0}=Y$. Put
+\begin{equation}\label{sp:eq:gamma}
+ \gamma_j(n)=\sum_{\ell m=n}\one_{\{\ell\in I_j\ \mathrm{prime}\}}\one_{\{P^-(m)\ge z_j\}}.
+\end{equation}
+
+\begin{proposition}[Distribution of the stage sequences]\label{sp:prop:distG}
+For every $A>0$, choose $B\ge A+3$. Then for every interval
+$I\subseteq[1,X]$,
+\begin{equation}\label{sp:eq:DistG}
+ \sum_{j<J_0}\ \sum_{d\le X^{1/2}(\log X)^{-B}}\max_{(h,d)=1}|\Delta_{\gamma_j}(d,h;I)|
+ \ \ll_{a,b,A}\ \frac{X}{(\log X)^A}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+On $I$, $\gamma_j=a*b$ with $b$ the indicator of primes in $I_0=I_j\subseteq[z_j,2z_j]$
+and $a_m=\one_{\{P^-(m)\ge z_j\}}\one_{m\le X/z_j}$. Here $L=z_j\ge X^a$,
+$M=X/z_j\ge X^{1-b}\ge X^{2/3}$ and $ML=X$. Apply Lemma~\ref{sp:lem:BBV} with
+$A+1$ in place of $A$ and sum over the $\ll\log X$ stages.
+\end{proof}
+
+% -------------------------------------------------------------
+\subsection{Sieve inputs}\label{sp:sec:sieve}
+
+Let $(w_n)_{n\in I}$ be nonnegative weights on a finite interval $I$, let
+$\mathcal P$ be the set of odd primes, $P(z)=\prod_{p\in\mathcal P,\,p<z}p$, and
+\[
+ S(w,z)=\sum_{\substack{n\in I\\ (N-n,P(z))=1}}w_n,\qquad
+ A_d=\sum_{\substack{n\in I\\ d\mid N-n}}w_n,\qquad r_d=A_d-g(d)\,\mathcal X,
+\]
+for a multiplicative $g$ on squarefree $d\mid P(z)$ and $\mathcal X>0$. Put
+$V(z)=\prod_{p\mid P(z)}(1-g(p))$ and $s=\log D/\log z$.
+
+\begin{theorem}[Linear sieve; Jurkat--Richert]\label{sp:thm:sieve}
+Let the weights $w_n$ be nonnegative integers, so that $(N-n)_{n\in I}$ counted
+with multiplicity $w_n$ is a finite sequence of integers. Suppose
+$0\le g(p)<1$ and, for some constant $L_0$,
+\begin{equation}\label{sp:eq:dim1}
+ \prod_{\substack{p\in\mathcal P\\ w\le p<z}}\bigl(1-g(p)\bigr)^{-1}\le
+ \frac{\log z}{\log w}\Bigl(1+\frac{L_0}{\log w}\Bigr)\qquad(2\le w<z).
+\end{equation}
+Then there is $\eta_{L_0}(D)\to0$ as $D\to\infty$ such that
+\begin{align*}
+ S(w,z)&\le\mathcal XV(z)\bigl(F(s)+\eta_{L_0}(D)\bigr)
+ +\sum_{d<D,\ d\mid P(z)}4^{\nu(d)}|r_d| &&(2\le z\le D\le\mathcal X),\\
+ S(w,z)&\ge\mathcal XV(z)\bigl(f(s)-\eta_{L_0}(D)\bigr)
+ -\sum_{d<D,\ d\mid P(z)}4^{\nu(d)}|r_d| &&(2\le z\le D\le\mathcal X).
+\end{align*}
+Here one may take $\eta_{L_0}(D)\ll_{L_0}(\log\log D)^{3/4}(\log D)^{-1/4}$, and
+$f(s)=0$ for $s\le2$, so the lower bound has content only for $D>z^2$.
+\end{theorem}
+
+The upper bound also applies when $1<s<2$ by reduction to $s=2$:
+if $z>D^{1/2}$, then $S(w,z)\le S(w,D^{1/2})$, and
+\eqref{sp:eq:dim1} gives
+\[
+ V(D^{1/2})\le V(z)\frac{\log z}{\log D^{1/2}}
+ \left(1+O_{L_0}\bigl(1/\log D\bigr)\right)
+ =V(z)\frac2s\left(1+O_{L_0}\bigl(1/\log D\bigr)\right).
+\]
+The remainder sum for $D^{1/2}$ is bounded by that for $z$;
+using $F(2)=e^\gamma$ and $F(s)=2e^\gamma/s$ yields the
+stated upper bound uniformly over the stages used below.
+
+This is the Jurkat--Richert theorem \cite[p.~230]{JurkatRichert},
+\cite[p.~231]{HR}, in the formulation of
+Diamond--Halberstam \cite[p.~81]{DiamondHalberstam2008}. Some formulations
+carry $3^{\nu(d)}$ instead of $4^{\nu(d)}$; Iwaniec's form of Rosser's sieve
+\cite{Iwaniec80} carries no weight. We use the weakest of these,
+$4^{\nu(d)}$. The theorem is stated for finite integer sequences counted with
+multiplicity, which is why the weights are required to be integers. We apply it
+to $K!\,U_y$ (Lemma~\ref{sp:lem:weight}: $\prod_ie_i!$ divides $(\sum_ie_i)!$, which
+divides $K!$) and to $\gamma_j$, which are integer-valued.
+
+\begin{lemma}[Removing the factor $c^{\nu(d)}$]\label{sp:lem:3nu}
+Let $c\ge1$. If $0\le w_n\le\kappa$, $|I|\le x$, $\mathcal X\le\kappa x$,
+$g(d)\le1/\varphi(d)$ and $D\le x$, then
+\[
+ \sum_{d<D,\ d\mid P(z)}c^{\nu(d)}|r_d|
+ \ll_{\kappa,c}\Bigl(\sum_{d<D,\ d\mid P(z)}|r_d|\Bigr)^{1/2}x^{1/2}(\log x)^{c^2/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+By Cauchy--Schwarz,
+$\sum c^{\nu(d)}|r_d|\le\bigl(\sum c^{2\nu(d)}|r_d|\bigr)^{1/2}\bigl(\sum|r_d|\bigr)^{1/2}$.
+Trivially $|r_d|\le A_d+g(d)\mathcal X\le\kappa(x/d+1)+\kappa x/\varphi(d)$, and
+$\sum_{d<D}\mu^2(d)c^{2\nu(d)}/\varphi(d)\le\prod_{p<D}(1+c^2/(p-1))\ll_c(\log D)^{c^2}$,
+$\sum_{d<D}\mu^2(d)c^{2\nu(d)}\ll_c D(\log D)^{c^2-1}$. Hence
+$\sum c^{2\nu(d)}|r_d|\ll_{\kappa,c}x(\log x)^{c^2}$.
+\end{proof}
+
+For the stage sequences, the weighted estimate is applied jointly in $(j,d)$.
+Indeed, each $n\le X$ has at most $1/a$ prime factors $\ell\ge X^a$,
+counted with multiplicity, so $\sum_j\gamma_j(n)\le1/a$. Consequently,
+for squarefree $d$ in the sieve support,
+\[
+ \sum_j|r_{j,d}|\le\sum_j A_{j,d}+\frac{\sum_j M_j}{\varphi(d)}
+ \ll_a \frac Xd+1+\frac X{\varphi(d)}.
+\]
+The same divisor-sum bounds as in Lemma~\ref{sp:lem:3nu} therefore give
+$\sum_{j,d}16^{\nu(d)}|r_{j,d}|\ll_a X(\log X)^{16}$.
+Together with the aggregate estimate
+$\sum_{j,d}|r_{j,d}|\ll_a X(\log X)^{-22}$ from
+Proposition~\ref{sp:prop:distG}, a single Cauchy--Schwarz inequality over
+$(j,d)$ yields
+\[
+ \sum_{j,d}4^{\nu(d)}|r_{j,d}|
+ \ll_a \bigl(X(\log X)^{-22}\bigr)^{1/2}
+          \bigl(X(\log X)^{16}\bigr)^{1/2}
+ \ll_a X(\log X)^{-3}.
+\]
+
+\begin{lemma}[A priori bounds for $\omega$, $F$, $f$]\label{sp:lem:apriori}
+Let $M=2e^\gamma$. On each open interval $(k,k+1)$, $k\ge1$, the functions
+$\omega$, $F$, $f$ are $C^\infty$, and their derivatives extend continuously to
+the closed interval from inside. Moreover:
+\begin{enumerate}[label=(\roman*)]
+\item $\tfrac12\le\omega(u)\le1$ for $u\ge1$;
+\item $|\omega'(u)|\le1$ for $1<u<2$, and $|\omega'(u)|\le1/(2u)$ for $u>2$;
+\item $|\omega''(u)|\le2$ for $1<u<2$, and $|\omega''(u)|\le3/(2u)$ for $u>2$,
+ $u\notin\mathbb Z$;
+\item $0\le f(s)\le M$ and $0<F(s)\le M$ for $s\ge1$;
+\item $|F'(s)|\le2e^\gamma/s^2\le M$ for $1<s<3$, and $|F'(s)|\le M/s$ for $s>3$;
+ $f'=0$ on $(1,2)$, and $|f'(s)|\le M/s$ for $s>2$;
+\item $|F''(s)|=4e^\gamma/s^3\le2M$ for $1<s<3$, and
+ $|F''(s)|\le\bigl(M/(s-1)+2M/s\bigr)/s$ for $s>3$; $f''=0$ on $(1,2)$, and
+ $|f''(s)|\le M$ for $s>2$ ($s\notin\mathbb Z$).
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Smoothness follows by induction over unit intervals from the integral forms
+$u\omega(u)=k\omega(k)+\int_k^u\omega(t-1)\,dt$,
+$sF(s)=kF(k)+\int_k^sf(t-1)\,dt$ and $sf(s)=kf(k)+\int_k^sF(t-1)\,dt$, whose
+integrands are smooth on the previous unit interval.
+(i) It holds on $[1,2]$. If it holds on $[1,u-1]$ with $u\ge2$, then
+$u\omega(u)=1+\int_2^u\omega(t-1)\,dt$ lies in $[1+(u-2)/2,\,u-1]$, so
+$\tfrac12\le\omega(u)\le1-1/u$.
+(ii) $\omega'=-1/u^2$ on $(1,2)$; for $u>2$, $u\omega'(u)=\omega(u-1)-\omega(u)$,
+a difference of two numbers in $[\tfrac12,1]$.
+(iii) $\omega''=2/u^3$ on $(1,2)$; for $u>2$, differentiating
+$u\omega'+\omega=\omega(u-1)$ gives $u\omega''=\omega'(u-1)-2\omega'(u)$, and
+$|\omega'(u-1)|\le1$, $2|\omega'(u)|\le1/u\le1/2$.
+(iv) $F=2e^\gamma/s\le M$ on $[1,3]$ and $f=0$ on $[1,2]$. Induction over unit
+intervals using $sf(s)=\int_2^sF(t-1)\,dt$ and
+$sF(s)=2e^\gamma+\int_3^sf(t-1)\,dt$ gives $0\le f(s)\le M(s-2)/s$ and
+$0<F(s)\le(M+(s-3)M)/s$.
+(v) For $s>3$, $sF'(s)=f(s-1)-F(s)$; for $s>2$, $sf'(s)=F(s-1)-f(s)$. Both are
+differences of numbers in $[0,M]$.
+(vi) Differentiating, $sF''+2F'=f'(s-1)$ for $s>3$ and $sf''+2f'=F'(s-1)$ for
+$s>2$. For $2<s<3$, $|F'(s-1)|\le2e^\gamma/(s-1)^2\le M$ and $2|f'(s)|\le M$,
+so $|f''|\le M$. For $s>3$, $|F'(s-1)|\le M$ and $2|f'(s)|\le2M/3$, so
+$|f''|\le(5M/3)/3<M$. For $F''$ with $s>3$, use $|f'(s-1)|\le M/(s-1)$ and
+$|F'(s)|\le M/s$.
+\end{proof}
+
+\begin{lemma}[Rough numbers in intervals]\label{sp:lem:buchstab}
+Uniformly for $2\le z\le\sqrt x$,
+\[
+ \Phi(x,z):=\#\{m\le x:P^-(m)\ge z\}=\frac{x}{\log z}\Bigl(\omega(u)+O\Bigl(\frac1{\log z}\Bigr)\Bigr),
+ \qquad u=\frac{\log x}{\log z}\ge2,
+\]
+\cite[Theorem~III.6.4]{Tenenbaum}. Consequently, for fixed $c>1$ and
+$z^2\le x_1<x_2\le cx_1$,
+\[
+ \#\{x_1<m\le x_2:P^-(m)\ge z\}=\frac{(x_2-x_1)\,\omega(u_2)}{\log z}+O_c\Bigl(\frac{x_2}{(\log z)^2}\Bigr),
+ \qquad u_2=\frac{\log x_2}{\log z}.
+\]
+\end{lemma}
+
+\begin{proof}
+Subtract the two instances of the first formula. Since $u_1,u_2\ge2$ and
+$|\omega'(u)|\le1/(2u)\le1/4$ for $u>2$ (Lemma~\ref{sp:lem:apriori}),
+$|\omega(u_2)-\omega(u_1)|\le|u_2-u_1|/4=\log(x_2/x_1)/(4\log z)\ll_c1/\log z$.
+\end{proof}
+
+\begin{remark}[Where $b<1/3$ is used]
+In Proposition~\ref{sp:prop:upper} the cofactors $m$ of the stage-$j$ primes
+$\ell\in[z_j,2z_j)$ lie in $(X/(8z_j),\,X/z_j]$. Lemma~\ref{sp:lem:buchstab}
+requires $X/(8z_j)\ge z_j^2$, i.e.\ $z_j^3\le X/8$. This holds for all stages
+once $X$ is large, because $z_j\le Y=X^b$ with $3b<1$. For $\R_y$ the condition
+is $X/4\ge y^2$, i.e.\ $a<1/2$.
+\end{remark}
+
+\begin{lemma}[Local factors]\label{sp:lem:local}
+For even $N\le2X$ let $g_N(p)=1/(p-1)$ for odd $p\nmid N$ and $g_N(p)=0$ for
+$p\mid N$, and $V_N(z)=\prod_{3\le p<z}(1-g_N(p))$. Then \eqref{sp:eq:dim1} holds
+with an absolute $L_0$, $V_N(z)\gg1/\log z$ uniformly in $N$, and uniformly for
+$a\le\alpha\le b$,
+\[
+ \frac{V_N(X^\alpha)}{V_N(X^a)}=\frac a\alpha\bigl(1+O_a(1/\log X)\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+$(1-1/(p-1))^{-1}=(1-1/p)^{-1}(1+O(p^{-2}))$, so \eqref{sp:eq:dim1} and the lower
+bound follow from Mertens' theorem; setting $g_N(p)=0$ for $p\mid N$ only
+decreases the product in \eqref{sp:eq:dim1}. In the ratio, at most $1/a+1$ primes
+$p\ge X^a$ divide $N$, each changing the product by $1+O(X^{-a})$.
+\end{proof}
+
+% -------------------------------------------------------------
+\subsection{The starting lower bound}\label{sp:sec:lower}
+
+Fix $0<\varepsilon<1/6$ and $0<a\le(1/2-\varepsilon)/2$, and put
+$D=X^{1/2-\varepsilon}$, $s_a=(1/2-\varepsilon)/a\ge2$ and
+$\R_y=\sum_{n\in J}U_y(n)$. By Lemma~\ref{sp:lem:squarefull} and
+Lemma~\ref{sp:lem:buchstab} with $z=y$, $x_1=\lceil X/4\rceil-1$,
+$x_2=\lfloor N-X/4\rfloor$ (so $x_2\le4x_1$, $x_1\ge y^2$, and
+$u_2=1/a+O(1/\log X)$),
+\begin{equation}\label{sp:eq:R}
+ \R_y=\frac{|J|\,\omega(1/a)}{a\log X}\bigl(1+o(1)\bigr)
+ =\Bigl(\frac{\omega(1/a)}{2a}+o(1)\Bigr)\frac{X}{\log X}.
+\end{equation}
+
+\begin{proposition}\label{sp:prop:lower}
+Uniformly for even $N\in(q^2,r^2)$, $|B_y(N)|\ge\R_yV_N(y)\bigl(f(s_a)-o(1)\bigr)$.
+\end{proposition}
+
+\begin{proof}
+Apply the lower bound of Theorem~\ref{sp:thm:sieve} with the integer weights
+$w_n=K!\,U_y(n)$ on $J$, $z=y$, $g=g_N$, $\mathcal X=K!\,\R_y$; note
+$y\le D\le\mathcal X$ and $D\ge y^2$. Every $n$ in the support is $y$-rough, hence
+odd and coprime to every $d\mid P(y)$. So $A_d=0=g_N(d)$ when $(d,N)>1$, and
+for $(d,N)=1$ the residue $N$ is reduced and $r_d=K!\,\Delta_{U_y}(d,N;J)$. As
+$D\le X^{1/2}(\log X)^{-B}$ for large $X$, Proposition~\ref{sp:prop:distU} with
+$A=22$ and Lemma~\ref{sp:lem:3nu} (with $c=4$, $\kappa=K!$) bound the remainder
+by $O(X(\log X)^{-3})=o(\R_yV_N(y))$, using Lemma~\ref{sp:lem:local}. Dividing by
+$K!$ gives $S(U_y,y)\ge\R_yV_N(y)(f(s_a)-o(1))$. Since $N$ is even and $n$ odd, $N-n$ is
+odd, so the condition $(N-n,P(y))=1$ means $N-n$ is $y$-rough. Finally
+$S(U_y,y)\le|B_y(N)|+2\cdot\#\{\text{nonsquarefree $y$-rough integers in }J\}$,
+and Lemma~\ref{sp:lem:squarefull} bounds the last term by $O(X^{1-a}+X^{1/2})$.
+\end{proof}
+
+% -------------------------------------------------------------
+\subsection{First-kill decomposition and the upper bound}\label{sp:sec:upper}
+
+\begin{lemma}[First-kill identity]\label{sp:lem:firstkill}
+For $p\in[y,Y)$ let $K_p$ be the number of $n\in B_y(N)$ for which $p$ is the
+least prime in $[y,Y)$ dividing $n(N-n)$. Then
+$|B_y(N)|-|B_Y(N)|=\sum_{y\le p<Y}K_p$. If $p\nmid N$ then $K_p=2K_p^{(1)}$, where
+$K_p^{(1)}$ counts those $n$ with $p\mid n$. Moreover
+$\sum_{p\mid N,\ y\le p<Y}K_p\ll_aX^{1-a}$.
+\end{lemma}
+
+\begin{proof}
+An element of $B_y(N)$ lies in $B_Y(N)$ iff no prime in $[y,Y)$ divides
+$n(N-n)$; otherwise the least such prime is unique. If $p\nmid N$, then $p$
+cannot divide both $n$ and $N-n$, and $n\mapsto N-n$ preserves $J$, $B_y(N)$
+and the defining property while exchanging $p\mid n$ with $p\mid N-n$. At most
+$1/a+1$ primes $p\ge X^a$ divide $N$, and each divides $n$ or $N-n$ for
+$\ll X/p+1$ values of $n\in J$.
+\end{proof}
+
+\begin{proposition}\label{sp:prop:upper}
+Uniformly for even $N\in(q^2,r^2)$,
+\[
+\sum_{y\le p<Y}K_p\le\R_yV_N(y)\bigl(\E(a,b,\varepsilon)+o(1)\bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+\emph{Majorant.} Let $p\in I_j$, $p\nmid N$, and $n=pm$ counted by $K_p^{(1)}$.
+All prime factors of $m$ are $\ge y$ (as $n$ is $y$-rough) and none lies in
+$[y,p)$ (minimality of $p$), so $m$ is $p$-rough, hence $z_j$-rough. Likewise
+$N-n$ is $y$-rough with no prime factor in $[y,p)$, hence $z_j$-rough. Dropping
+the squarefree conditions and summing over $p\in I_j$,
+\[
+ \sum_{p\in I_j}K_p^{(1)}\le S(\gamma_j,z_j)
+ =\sum_{\substack{n\in J\\(N-n,P(z_j))=1}}\gamma_j(n).
+\]
+
+\emph{Upper sieve.} Every $n$ in the support of $\gamma_j$ is $z_j$-rough, so as
+in Proposition~\ref{sp:prop:lower}, $r_d=\Delta_{\gamma_j}(d,N;J)$ for $(d,N)=1$ and
+$r_d=0$ otherwise, with $\mathcal X=M_j:=\sum_{n\in J}\gamma_j(n)$. Here
+$\gamma_j(n)\le1/a+1$, since $\gamma_j(n)$ is at most the number of prime factors
+of $n$ that are $\ge y$. Put $\alpha_j=\log z_j/\log X\in[a,b]$ and
+$s_j=(1/2-\varepsilon)/\alpha_j$; then $s_j\ge3(1/2-\varepsilon)>1$ because $b<1/3$
+and $\varepsilon<1/6$, so $z_j\le D$. The weights $\gamma_j$ are integers.
+For a stage with $M_j<D$, use the trivial bound
+$S(\gamma_j,z_j)\le M_j<D$; since there are $O(\log X)$ stages,
+the sum of these contributions is at most $O(D\log X)
+=o(X/(\log X)^2)$. For stages with $M_j\ge D$, the hypotheses
+of Theorem~\ref{sp:thm:sieve} hold. Proposition~\ref{sp:prop:distG}
+with $A=22$ (summed over all stages) and the joint weighted
+remainder estimate following Lemma~\ref{sp:lem:3nu} give
+\[
+ \sum_{j<J_0}S(\gamma_j,z_j)\le\sum_{j<J_0}M_jV_N(z_j)\bigl(F(s_j)+o(1)\bigr)+O\Bigl(\frac{X}{(\log X)^3}\Bigr).
+\]
+
+\emph{Stage masses.} For $\ell\in I_j$ the cofactors $m$ range over
+$(X/(4\ell),(N-X/4)/\ell]$, an interval of length $|J|/\ell+O(1)$ and ratio
+$\le4$, with $\log m/\log z_j=(1-\alpha_j)/\alpha_j+O(1/\log X)$. Its lower end
+is $\ge X/(8z_j)\ge z_j^2$ for large $X$ (because $3b<1$), so
+Lemma~\ref{sp:lem:buchstab} applies with $z=z_j$ and $u_2\ge2$. Hence
+\[
+ M_j=\sum_{\ell\in I_j}\Bigl(\frac{|J|\,\omega((1-\alpha_j)/\alpha_j)}{\ell\,\alpha_j\log X}
+ +O\Bigl(\frac{X}{\ell\log^2X}\Bigr)\Bigr).
+\]
+Put $\Delta_j=\alpha_{j+1}-\alpha_j\le(\log2)/\log X$.
+The effective prime number theorem with its classical
+zero-free-region error gives, uniformly even for an arbitrarily
+short final stage,
+\[
+\sum_{\ell\in I_j}\frac1\ell
+=\log\frac{\alpha_{j+1}}{\alpha_j}
++O_a\bigl(e^{-c_a\sqrt{\log X}}\bigr)
+=\frac{\Delta_j}{\alpha_j}
++O_a\bigl(\Delta_j^2+e^{-c_a\sqrt{\log X}}\bigr).
+\]
+This is an \emph{additive}, not relative, uniform approximation.
+In particular, using the stated rough-number estimate and its
+uniform absolute error, we obtain
+\begin{equation}\label{sp:eq:stageMass}
+ M_j=\frac{|J|\,\omega\bigl((1-\alpha_j)/\alpha_j\bigr)}{\alpha_j^2\log X}\,\Delta_j
+ +O_a\!\left(\frac{X}{\log X}
+  \left(\Delta_j^2+e^{-c_a\sqrt{\log X}}\right)
+   +\frac{X}{(\log X)^2}\Delta_j\right).
+\end{equation}
+Here the final term accounts for the uniform Buchstab error.
+Summing the absolute errors over all stages gives
+$O_a(X/(\log X)^2)=o(X/\log X)$, since
+$\sum_j\Delta_j^2\ll 1/\log X$ and there are
+$O(\log X)$ stages.
+
+\emph{Normalisation.} By Lemma~\ref{sp:lem:firstkill},
+$\sum_pK_p\le2\sum_jS(\gamma_j,z_j)+O(X^{1-a})$. Divide by
+$\R_yV_N(y)=|J|\,\omega(1/a)V_N(y)/(a\log X)\cdot(1+o(1))$ (from \eqref{sp:eq:R}) and
+use Lemma~\ref{sp:lem:local} for $V_N(z_j)/V_N(y)=(a/\alpha_j)(1+o(1))$:
+\[
+ \frac{2M_jV_N(z_j)F(s_j)}{\R_yV_N(y)}
+ =\frac{2a^2}{\omega(1/a)}\,\omega\Bigl(\frac{1-\alpha_j}{\alpha_j}\Bigr)
+ F(s_j)\,\frac{\Delta_j}{\alpha_j^3}+e_j,
+\qquad \sum_j|e_j|=o(1).
+\]
+Since $\alpha_{j+1}-\alpha_j\le\log2/\log X\to0$ and the integrand of
+\eqref{sp:eq:E} is continuous on $[a,b]$, the sum over $j$ converges to
+$\E(a,b,\varepsilon)$. The aggregate error is $o(1)$ by the additive stage-mass estimate
+and the uniform Mertens ratio; no relative error estimate is used
+for an arbitrarily short final stage.
+\end{proof}
+
+\begin{remark}
+The factor $2$ is the reflection factor of Lemma~\ref{sp:lem:firstkill}; one factor
+$a/\alpha$ comes from $V_N(z_j)/V_N(y)$; the remaining $a/\alpha$ (together with
+$1/\alpha$) comes from the ratio of the stage mass \eqref{sp:eq:stageMass} to
+$\R_y$. Because stages have width $\log2/\log X$ in $\alpha$, relaxing
+$p$-roughness to $z_j$-roughness costs only $1+O(1/\log X)$; no loss of size
+$O(\eta)$ in a stage parameter occurs.
+\end{remark}
+
+% -------------------------------------------------------------
+\subsection{Proof of Theorem~\ref{sp:thm:criterion}}\label{sp:sec:proof}
+
+By Lemma~\ref{sp:lem:firstkill} and Propositions~\ref{sp:prop:lower} and
+\ref{sp:prop:upper},
+\[
+ |B_Y(N)|\ge\R_yV_N(y)\Bigl(f(s_a)-\E(a,b,\varepsilon)-o(1)\Bigr)-O_a(X^{1-a}),
+\]
+uniformly in $N$. Under \eqref{sp:eq:criterion}, for $X$ large the bracket exceeds
+$\frac12(f(s_a)-\E)>0$, and $\R_yV_N(y)\gg_aX/(\log X)^2$ by \eqref{sp:eq:R} and
+Lemma~\ref{sp:lem:local}. Finally $B_Y(N)\subseteq A_Y(N)$. The only ineffective
+input is the Siegel--Walfisz theorem in Lemma~\ref{sp:lem:BBV}. \qed
+
+% -------------------------------------------------------------
+
+\subsection{Validated numerical inequality}\label{sp:sec:numerics}
+The parameters are the exact rationals
+\[
+ a=\frac{2}{25},\qquad b=\frac{137}{500},\qquad
+ \varepsilon=\frac1{10^4},\qquad L=\frac12-\varepsilon.
+\]
+For the Buchstab and linear-sieve functions defined above, the required
+inequality is $f(L/a)>\mathcal E(a,b,\varepsilon)$. An interval calculation
+at 192-bit Arb precision partitions the integral at integer crossings of
+$(1-\alpha)/\alpha$ and $L/\alpha$, using degree-110 Taylor models with
+rigorous truncation and endpoint bounds on 15 analytic segments. The reported
+outward enclosures are
+\begin{align}
+ 0.99994969&<f(L/a)<0.99994970,\nonumber\\
+ 0.99952912&<\mathcal E(a,b,\varepsilon)<0.99952914,\nonumber\\
+ f(L/a)-\mathcal E(a,b,\varepsilon)&>4.2055\times10^{-4}>0.
+ \label{sp:eq:certified-margin}
+\end{align}
+The executable sources are \texttt{sieve\_functions.py} and
+\texttt{certify\_first\_kill.py}. These computer-assisted bounds depend
+on the correctness of the interval-arithmetic implementation.
+
+\begin{thebibliography}{99}
+\bibitem{Bombieri65} E.~Bombieri, On the large sieve, \emph{Mathematika} \textbf{12} (1965), 201--225.
+\bibitem{BHP2001} R.~C.~Baker, G.~Harman, J.~Pintz, The difference between consecutive primes, II, \emph{Proc. London Math. Soc.} \textbf{83} (2001), 532--562.
+\bibitem{BFI86} E.~Bombieri, J.~B.~Friedlander, H.~Iwaniec, Primes in arithmetic progressions to large moduli, \emph{Acta Math.} \textbf{156} (1986), 203--251.
+\bibitem{Buchstab} A.~A.~Buchstab, Asymptotic estimates of a general number-theoretic function, \emph{Mat. Sb.} \textbf{2(44)} (1937), 1239--1246.
+\bibitem{FI} J.~Friedlander, H.~Iwaniec, \emph{Opera de Cribro}, AMS Colloquium Publications \textbf{57}, 2010.
+\bibitem{HR} H.~Halberstam, H.-E.~Richert, \emph{Sieve Methods}, Academic Press, 1974.
+\bibitem{Goldston1990} D.~A.~Goldston, Linnik's theorem on Goldbach numbers in short intervals, \emph{Glasgow Math. J.} \textbf{32} (1990), 285--297, doi:10.1017/S001708950000937X.
+\bibitem{GuthMaynard} L.~Guth, J.~Maynard, New large value estimates for Dirichlet polynomials, \emph{Ann. of Math.} \textbf{203} (2026), 623--675, doi:10.4007/annals.2026.203.2.6.
+\bibitem{Languasco95} A.~Languasco, Some results on Goldbach's problem, \emph{Rend. Sem. Mat. Univ. Politec. Torino} \textbf{53} (1995), no.~4, 325--337 (see p.~327 for the Perelli--Pintz asymptotic).
+\bibitem{PerelliPintz93} A.~Perelli, J.~Pintz, On the exceptional set for Goldbach's problem in short intervals, \emph{J. London Math. Soc.} (2) \textbf{47} (1993), 41--49, doi:10.1112/jlms/s2-47.1.41.
+\bibitem{Iwaniec80} H.~Iwaniec, Rosser's sieve, \emph{Acta Arith.} \textbf{36} (1980), 171--202.
+\bibitem{JurkatRichert} W.~B.~Jurkat, H.-E.~Richert, An improvement of Selberg's sieve method I, \emph{Acta Arith.} \textbf{11} (1965), 217--240.
+\bibitem{Motohashi76} Y.~Motohashi, An induction principle for the generalization of Bombieri's prime number theorem, \emph{Proc. Japan Acad.} \textbf{52} (1976), 273--275.
+\bibitem{Nagura} J.~Nagura, On the interval containing at least one prime number, \emph{Proc. Japan Acad.} \textbf{28} (1952), 177--181.
+\bibitem{SelbergLectures} A.~Selberg, Lectures on sieves, in \emph{Collected Papers}, Vol.~II, Springer, 1991.
+\bibitem{Vinogradov65} A.~I.~Vinogradov, The density hypothesis for Dirichlet $L$-series, \emph{Izv. Akad. Nauk SSSR Ser. Mat.} \textbf{29} (1965), 903--934.
+\bibitem{DiamondHalberstam2008} H.~G.~Diamond, H.~Halberstam, \emph{A Higher-Dimensional Sieve Method}, Cambridge Tracts in Mathematics \textbf{177}, Cambridge University Press, 2008.
+\bibitem{Davenport} H.~Davenport, \emph{Multiplicative Number Theory}, 3rd ed.,
+revised by H.~L.~Montgomery, GTM 74, Springer, 2000.
+\bibitem{Polymath2014} D.~H.~J.~Polymath, Variants of the Selberg sieve, and
+bounded intervals containing many primes, \emph{Res. Math. Sci.} \textbf{1}
+(2014), article 12.
+\bibitem{Tenenbaum} G.~Tenenbaum, \emph{Introduction to Analytic and Probabilistic
+Number Theory}, 3rd ed., AMS, 2015.
+\end{thebibliography}
+
+\end{document}

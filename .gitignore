@@ -1,2 +1,48 @@
+
+# Python environments, caches, and build artifacts
 __pycache__/
 *.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Editor and OS artifacts
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# LaTeX compilation artifacts
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+
+# General temporary files
+*.tmp
+*.bak
+
+# First-Gate compilation log
+# Certification logs remain tracked
+extras/first_gate/first_gate_prime_square_blocks.log
+
+# First-Gate scratch and temporary outputs
+extras/first_gate/scratch/
+extras/first_gate/tmp/
+extras/first_gate/**/scratch_*
+extras/first_gate/**/tmp_*

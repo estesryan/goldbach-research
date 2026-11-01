@@ -1,0 +1,30 @@
+Exhaustive First-Gate scan, Computation comp:finite
+started 2026-11-01T14:46:50Z
+environment {'python': '3.12.10', 'python-flint': '0.9.0', 'FLINT': '3.6.0', 'numpy': '2.1.3', 'platform': 'Windows-11-10.0.26200-SP0'}
+manuscript sha256 8ca6fde20856f0b86e74303951eeb5e4d3d0a90a6b1bedaa8ffc65b95b4ab9b8
+source verify_first_gate_scan.py sha256 799b6d5f196b3454cdaefb4055b03e7b99dc066633ff1c389a1a5e1d02ccbe7d
+prime table to 100000000 built (0s)
+pi(x) checkpoints {10: 4, 100: 25, 1000: 168, 10000: 1229, 100000: 9592, 1000000: 78498, 10000000: 664579, 100000000: 5761455}: OK
+prime table vs FLINT is_prime on [(0, 200000), (99800000, 100000000)]: 0 mismatches
+block geometry {'blocks': 1225, 'first_q': 11, 'last_q': 9973, 'last_r': 10007, 'consecutive': True, 'covers_122_to_10007^2': True, 'largest_square_below_limit': True, 'pass': True}
+  block  100/1225 q=  569 r=  571 targets so far    162960 failures 0 max lambda 810 (1s)
+  block  200/1225 q= 1249 r= 1259 targets so far    792480 failures 0 max lambda 1281 (1s)
+  block  300/1225 q= 2003 r= 2011 targets so far   2022000 failures 0 max lambda 1722 (2s)
+  block  400/1225 q= 2777 r= 2789 targets so far   3889200 failures 0 max lambda 1833 (4s)
+  block  500/1225 q= 3607 r= 3613 targets so far   6526824 failures 0 max lambda 2064 (6s)
+  block  600/1225 q= 4447 r= 4451 targets so far   9905640 failures 0 max lambda 2352 (9s)
+  block  700/1225 q= 5309 r= 5323 targets so far  14167104 failures 0 max lambda 2754 (13s)
+  block  800/1225 q= 6173 r= 6197 targets so far  19201344 failures 0 max lambda 2754 (17s)
+  block  900/1225 q= 7027 r= 7039 targets so far  24773700 failures 0 max lambda 2784 (22s)
+  block 1000/1225 q= 7949 r= 7951 targets so far  31609140 failures 0 max lambda 3339 (29s)
+  block 1100/1225 q= 8861 r= 8863 targets so far  39276324 failures 0 max lambda 3339 (37s)
+  block 1200/1225 q= 9767 r= 9769 targets so far  47716620 failures 0 max lambda 3429 (45s)
+  block 1225/1225 q= 9973 r=10007 targets so far  50069964 failures 0 max lambda 3429 (48s)
+even targets scanned 50069964 (expected 50069964); coverage OK
+First-Gate failures: 0
+largest first survivor lambda = 3429 at N = 92661736 (q = 9623)
+sha256 of first-survivor array: 2831ee5382767e23379aede01c90ec8afefd049887076498b7993268ebfeea7f
+gcd(C^2-d^2, P_q) cross-checks: 2450 targets (first target and largest-lambda target of each block), mismatches 0
+certificate written: certificates/first_gate_scan_q9973.json
+STATUS PASS
+elapsed 54s
