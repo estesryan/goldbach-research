@@ -1,9 +1,10 @@
-# Goldbach Visualizations
+# Goldbach Research
 
 ![Seven computed views of primes and Goldbach's conjecture](images/poster-landscape.png)
 
-> Computational visualizations exploring primes, residue structure, sieving,
-> and Goldbach's conjecture, with independent cross-checks of the plotted data.
+> Mathematical research, computational experiments and visualizations
+> exploring primes, residue structure, sieving and Goldbach's conjecture,
+> with independent cross-checks of the computed data.
 
 `generate_poster.py` draws seven panels from settings at the top of the
 file. Every plotted point, count and number-bearing label is computed at run

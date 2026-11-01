@@ -4,14 +4,14 @@ title: "Goldbach Representations in Consecutive Prime-Square Blocks: A Multidime
 authors:
   - family-names: "Estes"
     given-names: "Ryan S."
-repository-code: "https://github.com/estesryan/goldbach-visualizations"
-url: "https://github.com/estesryan/goldbach-visualizations/tree/main/extras/first_gate"
+repository-code: "https://github.com/estesryan/goldbach-research"
+url: "https://github.com/estesryan/goldbach-research/tree/main/extras/first_gate"
 preferred-citation:
   type: article
   title: "Goldbach Representations in Consecutive Prime-Square Blocks: A Multidimensional Factorization and Sieve Analysis"
   authors:
     - family-names: "Estes"
       given-names: "Ryan S."
-  repository-code: "https://github.com/estesryan/goldbach-visualizations"
-  url: "https://github.com/estesryan/goldbach-visualizations/tree/main/extras/first_gate"
+  repository-code: "https://github.com/estesryan/goldbach-research"
+  url: "https://github.com/estesryan/goldbach-research/tree/main/extras/first_gate"
   notes: "Unrefereed research manuscript."
