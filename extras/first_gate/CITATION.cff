@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use the First-Gate research paper or its computational supplement, please cite the paper as below."
+title: "Goldbach Representations in Consecutive Prime-Square Blocks: A Multidimensional Factorization and Sieve Analysis"
+authors:
+  - family-names: "Estes"
+    given-names: "Ryan S."
+repository-code: "https://github.com/estesryan/goldbach-visualizations"
+url: "https://github.com/estesryan/goldbach-visualizations/tree/main/extras/first_gate"
+preferred-citation:
+  type: article
+  title: "Goldbach Representations in Consecutive Prime-Square Blocks: A Multidimensional Factorization and Sieve Analysis"
+  authors:
+    - family-names: "Estes"
+      given-names: "Ryan S."
+  repository-code: "https://github.com/estesryan/goldbach-visualizations"
+  url: "https://github.com/estesryan/goldbach-visualizations/tree/main/extras/first_gate"
+  notes: "Unrefereed research manuscript."
