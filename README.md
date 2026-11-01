@@ -9,16 +9,6 @@
 file. Every plotted point, count and number-bearing label is computed at run
 time. The worked example is N = 100.
 
-## Research paper
-
-**Goldbach Representations in Consecutive Prime-Square Blocks: A Multidimensional Factorization and Sieve Analysis**
-
-An original, unrefereed mathematical research paper investigating the First-Gate Goldbach conjecture through prime-factor decompositions, sieve theory, switching methods, and computer-assisted certification.
-
-The paper establishes unconditional sieve bounds, almost-all results, and a two-sided roughness theorem at depth $q^{0.548}$. It also provides exhaustive finite verification across 50,069,964 even integers. The First-Gate conjecture itself remains open.
-
-The manuscript, PDF, reproducible Python scripts, numerical certificates, and verification logs are available in [`extras/first_gate/`](extras/first_gate/).
-
 ## The seven panels
 
 1. **The prime wheel (mod 30).** Every prime greater than 5 is coprime to
@@ -285,6 +275,16 @@ They are neither joined nor fitted together with the dyadic bins.
 These are finite computations: every even N with 6 ≤ N < 2²⁰, plus 16
 selected prime-square blocks up to q < 50,000. The fitted exponents describe
 these finite ranges only and do not establish an asymptotic growth law.
+
+## Research paper
+
+**Goldbach Representations in Consecutive Prime-Square Blocks: A Multidimensional Factorization and Sieve Analysis**
+
+An original, unrefereed mathematical research paper investigating the First-Gate Goldbach conjecture through prime-factor decompositions, sieve theory, switching methods, and computer-assisted certification.
+
+The paper establishes unconditional sieve bounds, almost-all results, and a two-sided roughness theorem at depth $q^{0.548}$. It also provides exhaustive finite verification across 50,069,964 even integers. The First-Gate conjecture itself remains open.
+
+The manuscript, PDF, reproducible Python scripts, numerical certificates, and verification logs are available in [`extras/first_gate/`](extras/first_gate/).
 
 ## Code layout
 
