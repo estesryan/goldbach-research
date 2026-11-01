@@ -74,7 +74,7 @@ This paper is an unrefereed research manuscript. Suggested citation:
 
 > Ryan S. Estes, *Goldbach Representations in Consecutive Prime-Square Blocks: A Multidimensional
 > Factorization and Sieve Analysis*, unrefereed research manuscript,
-> https://github.com/estesryan/goldbach-visualizations.
+> https://github.com/estesryan/goldbach-research.
 
 The manuscript is [`first_gate_prime_square_blocks.tex`](first_gate_prime_square_blocks.tex)
 ([PDF](first_gate_prime_square_blocks.pdf)). Citation metadata is in [`CITATION.cff`](CITATION.cff).
